@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sheets">
+        <file>tiles.png</file>
+    </qresource>
+</RCC>

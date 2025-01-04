@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sheets">
+        <file>tanks.png</file>
+    </qresource>
+</RCC>
