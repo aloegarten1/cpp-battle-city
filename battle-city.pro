@@ -9,24 +9,13 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    game.cpp \
-    gameobject.cpp \
-    main.cpp \
-    battlecity.cpp \
-    tank.cpp \
-    tile.cpp \
-    tileset.cpp
+    src/main.cpp 
 
 HEADERS += \
-    battlecity.h \
-    game.h \
-    gameobject.h \
-    tank.h \
-    tile.h \
-    tileset.h
+    include/gameScene.h \
+    include/mainMenu.h \
+    include/mainWindow.h 
 
-FORMS += \
-    battlecity.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,5 +23,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    tanks_sheet.qrc \
-    tiles.qrc
+    resources.qrc

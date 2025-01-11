@@ -18,19 +18,10 @@ set(CMAKE_AUTOUIC ON)
 qt_standard_project_setup()
 
 qt_add_executable(tankGame
-        src/achievement.cpp
-        src/achievementwidget.cpp  
-        src/gamemanager.cpp  
+        
         src/main.cpp      
-        src/map.cpp         
-        src/projectile.cpp    
-        src/tank.cpp
-        src/achievementsscene.cpp  
-        src/botTank.cpp            
-        src/gameObject.cpp   
-        src/mainmenu.cpp  
-        src/playerTank.cpp  
-        src/settingsmenu.cpp    
+   
+       
         resources.qrc
 )
 
