@@ -2,13 +2,17 @@
 #define PLAYER_H
 
 #include <QGraphicsRectItem>
-#include <QObject>
+#include <QGraphicsScene>
 
-class Player : public QObject, public QGraphicsRectItem {
-    Q_OBJECT
+class Player : public QGraphicsRectItem
+{
 
 public:
-    explicit Player(QGraphicsScene* scene, QObject *parent = nullptr);
+    Player() : QGraphicsRectItem()
+    {
+        setRect(0, 0, 50, 50);
+        setBrush(Qt::blue);
+    }
 
 public slots:
     void moveLeft();
@@ -16,11 +20,6 @@ public slots:
     void moveUp();
     void moveDown();
     void keyPressEvent(QKeyEvent *event) override;
-
-protected:
-
-private:
-    QGraphicsScene* m_scene;
 };
 
 #endif // PLAYER_H

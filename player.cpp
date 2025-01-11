@@ -2,41 +2,34 @@
 #include <QKeyEvent>
 #include <QGraphicsScene>
 
-Player::Player(QGraphicsScene* scene, QObject *parent)
-    : QObject(parent), QGraphicsRectItem(), m_scene(scene) {
-    setRect(0, 0, 50, 50);
-    setBrush(Qt::blue);  // Set the color of the player's tank
+void Player::moveLeft()
+{
 
-    // Add the player to the scene
-    m_scene->addItem(this);
+    setPos(x() - 10, y());
 }
 
-void Player::moveLeft() {
-    if (pos().x() > 0) {
-        setPos(x() - 10, y());
-    }
+void Player::moveRight()
+{
+
+    setPos(x() + 10, y());
 }
 
-void Player::moveRight() {
-    if (pos().x() + rect().width() < m_scene->width()) {
-        setPos(x() + 10, y());
-    }
+void Player::moveUp()
+{
+
+    setPos(x(), y() - 10);
 }
 
-void Player::moveUp() {
-    if (pos().y() > 0) {
-        setPos(x(), y() - 10);
-    }
+void Player::moveDown()
+{
+
+    setPos(x(), y() + 10);
 }
 
-void Player::moveDown() {
-    if (pos().y() + rect().height() < m_scene->height()) {
-        setPos(x(), y() + 10);
-    }
-}
-
-void Player::keyPressEvent(QKeyEvent *event) {
-    switch (event->key()) {
+void Player::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
     case Qt::Key_Left:
         moveLeft();
         break;

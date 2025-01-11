@@ -2,15 +2,16 @@
 #define GAME_H
 
 #include <QObject>
-#include <QGraphicsScene>
+#include <QVector>
 #include "settings.h"
 #include "player.h"
 
-class Game : public QObject {
+class Game : public QObject
+{
     Q_OBJECT
 
 public:
-    explicit Game(QGraphicsScene* scene, Settings* settings, QObject *parent = nullptr);
+    explicit Game(Settings *settings, QObject *parent = nullptr);
 
     void initializeEnemies();
     void movePlayerLeft();
@@ -18,15 +19,15 @@ public:
     void movePlayerUp();
     void movePlayerDown();
 
-    QGraphicsScene* scene(){ return m_scene;}
+    QVector<QGraphicsItem *> items() const;
 
 private:
-    QGraphicsScene* m_scene;
-    Settings* m_settings;
-    Player* m_player;
+    Settings *m_settings;
+    Player *m_player;
+
+    QVector<QGraphicsItem *> m_items;
 
     void initializePlayer();
-
 };
 
 #endif // GAME_H

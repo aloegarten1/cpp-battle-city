@@ -4,9 +4,12 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 
-class Enemy : public QGraphicsRectItem {
+class Enemy : public QGraphicsRectItem
+{
+
 public:
-    Enemy() : QGraphicsRectItem() {
+    Enemy() : QGraphicsRectItem()
+    {
         setRect(0, 0, 40, 40);
         setBrush(Qt::red);
     }
