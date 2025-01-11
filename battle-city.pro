@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
+    player.cpp \
     settings.cpp \
     settingsmenu.cpp
 
@@ -20,6 +21,7 @@ HEADERS += \
     gamescene.h \
     mainmenu.h \
     mainwindow.h \
+    player.h \
     settings.h \
     settingsmenu.h
 

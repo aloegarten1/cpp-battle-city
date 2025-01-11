@@ -20,13 +20,12 @@ public:
 };
 
 GameScene::GameScene(Settings* settings, QWidget *parent)
-    : QGraphicsView(parent), m_settings(settings) {
+    : QGraphicsView(parent), m_settings(settings), m_player(nullptr) {
     QGraphicsScene* scene = new QGraphicsScene(this);
     setScene(scene);
 
-    // Initialize the tank
-    Tank* tank = new Tank();
-    scene->addItem(tank);
+    // Initialize the player
+    initializePlayer();
 
     // Initialize enemies
     initializeEnemies();
@@ -49,5 +48,17 @@ void GameScene::initializeEnemies() {
         int y = QRandomGenerator::global()->bounded(560);  // 600 - 40 (enemy height)
         enemy->setPos(x, y);
         scene->addItem(enemy);
+    }
+}
+
+void GameScene::initializePlayer() {
+    m_player = new Player(this->scene(), this);
+    // Optionally, set an initial position for the player
+    m_player->setPos(400, 300);
+}
+
+void GameScene::keyPressEvent(QKeyEvent *event) {
+    if (m_player) {
+        m_player->keyPressEvent(event);
     }
 }
