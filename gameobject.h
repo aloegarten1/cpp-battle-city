@@ -1,13 +1,16 @@
+#pragma once
+
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include "game.h"
 
 class GameObject: public QGraphicsPixmapItem
 {
 public:
-    GameObject(int x, int y, int size);
+    GameObject(Game * game, int x, int y, int size);
 
 
 protected:
@@ -17,6 +20,8 @@ protected:
 
     int width_;
     int height_;
+
+    Game * game_;
 
 };
 

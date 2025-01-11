@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef TANK_H
 #define TANK_H
 
@@ -7,15 +9,17 @@
 #include <QRect>
 
 
+#include "game.h"
 #include "gameobject.h"
+
 
 class Tank : public GameObject
 {
 public:
-    Tank(int x, int y, int size) : GameObject(x,y,size) {
+    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size) {
 
-        QPixmap tl = QPixmap(":/images/images/tanks.png");
-        QPixmap img = tl.copy(QRect(2.0f, 2.0f, 15.0f, 15.0f));
+        auto tl =  game->getTileset();
+        QPixmap img = tl->getTile("player1");
         setPixmap(img.scaled(QSize(50,50),Qt::KeepAspectRatio));
 
     }

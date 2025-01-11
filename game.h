@@ -1,10 +1,16 @@
+#pragma once
+
 #ifndef GAME_H
 #define GAME_H
 
 #include <QObject>
 #include <QVector>
+#include <QGraphicsItem>
+
 #include "settings.h"
-#include "player.h"
+#include "tileset.h"
+
+class Player;
 
 class Game : public QObject
 {
@@ -13,7 +19,7 @@ class Game : public QObject
 public:
     explicit Game(Settings *settings, QObject *parent = nullptr);
 
-    void initializeEnemies();
+    TileSet *getTileset() {return &m_tileset; };
 
     void movePlayerLeft();
     void movePlayerRight();
@@ -26,9 +32,14 @@ private:
     Settings *m_settings;
     Player *m_player;
 
+    TileSet m_tileset;
+
     QVector<QGraphicsItem *> m_items;
 
+    void parseTailset();
     void initializePlayer();
+    void initializeEnemies();
+
 };
 
 #endif // GAME_H

@@ -1,12 +1,19 @@
 #include "game.h"
 #include "enemy.h"
+#include "tank.h"
+#include "player.h"
 #include <QRandomGenerator>
 
 Game::Game(Settings *settings, QObject *parent)
-    : QObject(parent), m_settings(settings), m_player(nullptr)
+    : QObject(parent), m_settings(settings), m_player(nullptr),m_tileset(TileSet(QString(":/images/images/tanks.png")))
 {
+    parseTailset();
     initializePlayer();
     initializeEnemies();
+}
+
+void Game::parseTailset(){
+    m_tileset.addTile("player1",QRect(2.0f, 2.0f, 15.0f, 15.0f));
 }
 
 void Game::initializeEnemies()
@@ -25,7 +32,7 @@ void Game::initializeEnemies()
 
 void Game::initializePlayer()
 {
-    Tank * tank = new Tank(400,300, 50);
+    Tank * tank = new Tank(this, 400,300, 50);
     m_player = new Player(tank); // No need to pass scene here
 //    m_player->setPos(400, 300);
     m_items.append(tank);
