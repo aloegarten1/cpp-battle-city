@@ -1,36 +1,50 @@
 #include "tank.h"
 
-Tank::Tank():
-    _hp(0), _speed(0), _currDirection(UP)
+Tank::Tank(uint16_t __hp, qreal __speed, Direction __dir)
+    : hp_(__hp),
+      currSpeed_(__speed),
+      maxSpeed_(__speed),
+      dir_(__dir)
 {}
 
-Tank::Tank(const QPixmap image):
-    _hp(0), _speed(0), _currDirection(UP)
-{
-    setPixmap(image);
+void Tank::updateObject() {
+    move();
 }
 
+uint16_t Tank::hp() const noexcept {
+    return hp_;
+}
 
-void Tank::move() noexcept {
-    switch (_currDirection) {
-    case UP:
-        moveBy(.0f, -_speed);
-    case DOWN:
-        moveBy(.0f, _speed);
-    case RIGHT:
-        moveBy(_speed, .0f);
-    case LEFT:
-        moveBy(-_speed, .0f);
+qreal Tank::speed() const noexcept {
+    return currSpeed_;
+}
+
+Direction Tank::dir() const noexcept {
+    return dir_;
+}
+
+void Tank::startMoving(Direction dir) {
+    currSpeed_ = maxSpeed_;
+    dir_ = dir;
+}
+
+void Tank::stop() {
+    currSpeed_ = 0;
+}
+
+void Tank::move() {
+    switch(dir_) {
+    case Direction::UP:
+        moveBy(0.0f, -currSpeed_);
+        break;
+    case Direction::DOWN:
+        moveBy(0.0f, currSpeed_);
+        break;
+    case Direction::RIGHT:
+        moveBy(currSpeed_, 0.0f);
+        break;
+    case Direction::LEFT:
+        moveBy(-currSpeed_, 0.0f);
+        break;
     }
-}
-
-void Tank::stop() noexcept {
-    _speed = .0f;
-}
-void Tank::changeHealth(uint16_t delta) noexcept {
-    _hp += delta;
-}
-
-void Tank::setDirection(Direction dir) noexcept {
-    _currDirection = dir;
 }

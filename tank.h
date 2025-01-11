@@ -2,27 +2,50 @@
 #define TANK_H
 
 #include "gameobject.h"
+#include <QObject>
+#include <QGraphicsPathItem>
 
-class Tank : public GameObject
+enum class Direction {
+    RIGHT, LEFT, UP, DOWN
+};
+
+class Tank : public QObject, public GameObject
 {
+    Q_OBJECT;
+
 public:
-    enum Direction {
-        UP, DOWN, RIGHT, LEFT
-    };
+    Tank() = default;
+    /**
+     * @brief Tank
+     * @param pm - take from Tileset.
+     */
+    Tank(QPixmap& pm, uint16_t hp, qreal speed, Direction dir);
+    virtual ~Tank() = default;
 
-    Tank();
-    Tank(const QPixmap image);
+    virtual void updateObject();
 
-    void move() noexcept;
-    void stop() noexcept;
+    uint16_t hp() const noexcept;
+    qreal speed() const noexcept;
+    Direction dir() const noexcept;
 
-    void changeHealth(uint16_t delta) noexcept;
-    void setDirection(Direction dir) noexcept;
+    /**
+     * @brief startMoving: forces tank to move in direction "dir".
+     * @param dir: direction
+     */
+    void startMoving(Direction dir);
 
-protected:
-    uint16_t _hp;
-    qreal _speed;
-    Direction _currDirection;
+    /**
+     * @brief stop: forces tank to stop.
+     */
+    void stop();
+
+private:
+    uint16_t hp_;
+    qreal currSpeed_, maxSpeed_;
+    Direction dir_;
+
+private:
+    void move();
 };
 
 #endif // TANK_H

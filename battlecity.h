@@ -9,6 +9,12 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class BattleCity; }
 QT_END_NAMESPACE
 
+/**
+ * @brief The BattleCity class
+ *
+ * @todo Should contain multiple scenes: Menu and Game.
+ */
+
 class BattleCity : public QMainWindow
 {
     Q_OBJECT

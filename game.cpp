@@ -1,5 +1,5 @@
 #include "game.h"
-#include "gameobject.h"
+#include "tank.h"
 #include "tileset.h"
 
 #include <QTimer>
@@ -12,9 +12,10 @@ Game::Game(QObject *parent)
     TileSet tl = TileSet(":/sheets/tanks.png");
     tl.addTile("tank1", QRect(2.0f, 2.0f, 15.0f, 15.0f));
 
-    obj = new GameObject(tl.getTile("tank1"));
+    obj = new Tank(10, 3.f, Direction::UP);
+    obj->setPixmap(tl.getTile("tank1"));
 
-    addItem(obj);
+    addItem(obj);Ti
 
     QTimer *_timer = new QTimer;
 
@@ -25,6 +26,7 @@ Game::Game(QObject *parent)
 }
 
 void Game::updateScene() {
+    obj->updateObject();
     update();
 }
 
