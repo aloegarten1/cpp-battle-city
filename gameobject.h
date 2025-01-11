@@ -2,25 +2,19 @@
 #define GAMEOBJECT_H
 
 #include <QGraphicsPixmapItem>
+#include <QObject>
 
 class GameObject : public QGraphicsPixmapItem
 {
 public:
-    enum ColisionFlag : bool {
-        SOLID,
-        NOT_SOLID
-    };
+    GameObject() = default;
 
-    GameObject();
-    GameObject(const QPixmap& image);
+    virtual ~GameObject() = default;
 
-    void setColisionFlag(ColisionFlag flag) noexcept { _isSolid = flag; }
-    ColisionFlag isSolid() const noexcept { return _isSolid; }
-
-    void update();
-
-protected:
-    ColisionFlag _isSolid;
+    /**
+     * @brief updateObject: updates object state everytime whene scene was updated
+     */
+    virtual void updateObject() = 0;
 };
 
 #endif // GAMEOBJECT_H

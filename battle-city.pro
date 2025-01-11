@@ -13,16 +13,16 @@ SOURCES += \
     gameobject.cpp \
     main.cpp \
     battlecity.cpp \
-    mainmenu.cpp \
     tank.cpp \
+    tile.cpp \
     tileset.cpp
 
 HEADERS += \
     battlecity.h \
     game.h \
     gameobject.h \
-    mainmenu.h \
     tank.h \
+    tile.h \
     tileset.h
 
 FORMS += \

@@ -16,6 +16,7 @@ protected:
     // virtual void keyReleaseEvent(QKeyEvent * keyEvent);
 
 private:
+    qreal speed;
     GameObject * obj;
 };
 
