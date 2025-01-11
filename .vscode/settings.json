@@ -1,0 +1,10 @@
+{
+  "cmake.configureSettings": {
+    "CMAKE_PREFIX_PATH": "/home/xxx/Qt/6.8.1/gcc_64/"
+  },
+  "files.associations": {
+    "qscrollarea": "cpp",
+    "qgraphicsitem": "cpp",
+    "qt": "cpp"
+  }
+}
