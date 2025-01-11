@@ -9,21 +9,27 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    enemy.cpp \
+    game.cpp \
     gamescene.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
     player.cpp \
     settings.cpp \
-    settingsmenu.cpp
+    settingsmenu.cpp \
+    tank.cpp
 
 HEADERS += \
+    enemy.h \
+    game.h \
     gamescene.h \
     mainmenu.h \
     mainwindow.h \
     player.h \
     settings.h \
-    settingsmenu.h
+    settingsmenu.h \
+    tank.h
 
 
 # Default rules for deployment.

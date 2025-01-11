@@ -3,7 +3,7 @@
 
 #include <QGraphicsView>
 #include "settings.h"
-#include "player.h"
+#include "game.h"
 
 class GameScene : public QGraphicsView {
     Q_OBJECT
@@ -11,18 +11,14 @@ class GameScene : public QGraphicsView {
 public:
     GameScene(Settings* settings, QWidget *parent = nullptr);
 
-
 signals:
     void backToMainMenu();
-
-private:
-    void initializeEnemies();
-    void initializePlayer();
-
+    
+protected:
     void keyPressEvent(QKeyEvent *event) override;
 
-    Settings* m_settings;
-    Player* m_player;
+private:
+    Game* m_game;
 };
 
 #endif // GAME_SCENE_H
