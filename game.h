@@ -14,6 +14,7 @@ public:
     explicit Game(Settings *settings, QObject *parent = nullptr);
 
     void initializeEnemies();
+
     void movePlayerLeft();
     void movePlayerRight();
     void movePlayerUp();

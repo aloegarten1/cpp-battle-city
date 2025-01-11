@@ -3,14 +3,28 @@
 
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
+#include <QPixmap>
+#include <QRect>
 
-class Tank : public QGraphicsRectItem
+
+#include "gameobject.h"
+
+class Tank : public GameObject
 {
 public:
-    Tank() : QGraphicsRectItem() {
-        setRect(0, 0, 50, 50);
-        setBrush(Qt::blue);
+    Tank(int x, int y, int size) : GameObject(x,y,size) {
+
+        QPixmap tl = QPixmap(":/images/images/tanks.png");
+        QPixmap img = tl.copy(QRect(2.0f, 2.0f, 15.0f, 15.0f));
+        setPixmap(img.scaled(QSize(50,50),Qt::KeepAspectRatio));
+
     }
+
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+
 };
 
 #endif // TANK_H

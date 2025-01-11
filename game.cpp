@@ -25,44 +25,37 @@ void Game::initializeEnemies()
 
 void Game::initializePlayer()
 {
-    m_player = new Player(); // No need to pass scene here
-    m_player->setPos(400, 300);
-    m_items.append(m_player);
-}
-
-void Game::movePlayerLeft()
-{
-    if (m_player->pos().x() > 0)
-    {
-        m_player->setPos(m_player->x() - 10, m_player->y());
-    }
-}
-
-void Game::movePlayerRight()
-{
-    if (m_player->pos().x() + m_player->rect().width() < 800)
-    {
-        m_player->setPos(m_player->x() + 10, m_player->y());
-    }
-}
-
-void Game::movePlayerUp()
-{
-    if (m_player->pos().y() > 0)
-    {
-        m_player->setPos(m_player->x(), m_player->y() - 10);
-    }
-}
-
-void Game::movePlayerDown()
-{
-    if (m_player->pos().y() + m_player->rect().height() < 600)
-    {
-        m_player->setPos(m_player->x(), m_player->y() + 10);
-    }
+    Tank * tank = new Tank(400,300, 50);
+    m_player = new Player(tank); // No need to pass scene here
+//    m_player->setPos(400, 300);
+    m_items.append(tank);
 }
 
 QVector<QGraphicsItem *> Game::items() const
 {
     return m_items;
+}
+
+
+
+void Game::movePlayerLeft()
+{
+
+    m_player->moveLeft();
+
+}
+
+void Game::movePlayerRight()
+{
+    m_player->moveRight();
+}
+
+void Game::movePlayerUp()
+{
+    m_player->moveUp();
+}
+
+void Game::movePlayerDown()
+{
+    m_player->moveDown();
 }

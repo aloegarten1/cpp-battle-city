@@ -4,22 +4,21 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
-class Player : public QGraphicsRectItem
+#include "tank.h"
+
+class Player
 {
 
 public:
-    Player() : QGraphicsRectItem()
-    {
-        setRect(0, 0, 50, 50);
-        setBrush(Qt::blue);
-    }
-
-public slots:
+    Player(Tank * tank): tank_(tank) {};
     void moveLeft();
     void moveRight();
     void moveUp();
     void moveDown();
-    void keyPressEvent(QKeyEvent *event) override;
+
+
+private:
+    Tank * tank_;
 };
 
 #endif // PLAYER_H

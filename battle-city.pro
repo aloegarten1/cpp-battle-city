@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     enemy.cpp \
     game.cpp \
+    gameobject.cpp \
     gamescene.cpp \
     main.cpp \
     mainmenu.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     enemy.h \
     game.h \
+    gameobject.h \
     gamescene.h \
     mainmenu.h \
     mainwindow.h \
