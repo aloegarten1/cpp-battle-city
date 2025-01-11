@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix="/images">
-        <file>tiles.png</file>
-        <file>tanks.png</file>
+    <qresource prefix="images">
+        <file>images/tiles.png</file>
+        <file>images/tanks.png</file>
     </qresource>
 </RCC>
