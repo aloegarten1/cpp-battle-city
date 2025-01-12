@@ -1,12 +1,12 @@
 #include "gameobject.h"
 
-GameObject::GameObject(Game * game,int x, int y, int size): game_(game) {
+GameObject::GameObject(Game * game,float x, float y, bool collide): game_(game) {
     x_=x;
     y_=y;
-    width_=size;
-    height_=size;
+    collide_=collide;
 
-    this->setPos(x,y);
+    int s = game_->scale();
+    this->setPos(x*s,y*s);
 }
 
 
@@ -15,5 +15,8 @@ void GameObject::SetTile(QString name){
 
     auto tl =  game_->getTileset();
     QPixmap img = tl->getTile(name+"1");
-    setPixmap(img.scaled(QSize(50,50),Qt::KeepAspectRatio));
+
+    int s = game_->scale();
+    setPixmap(img.scaled(QSize(s,s),Qt::KeepAspectRatio));
+
 }

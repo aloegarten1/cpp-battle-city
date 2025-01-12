@@ -16,14 +16,15 @@
 class Tank : public GameObject
 {
 public:
-    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size), velocityX_(0), velocityY_(0) {}
+    Tank(Game *game, float x, float y ) : GameObject(game, x,y,true), velocityX_(0), velocityY_(0),velocity_(0.2) {}
 
-    void setVelocity(int vx, int vy);
+    void setDirecton(float vx, float vy);
     void update() override;
 
 private:
-    int velocityX_;
-    int velocityY_;
+    float velocityX_;
+    float velocityY_;
+    float velocity_;
 
 };
 

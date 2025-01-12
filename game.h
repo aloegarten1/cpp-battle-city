@@ -31,7 +31,10 @@ public:
     void stopPlayer();
 
     void update();
-    bool collide(int x, int y);
+    GameObject * collide(GameObject * obj, float x, float y);
+
+    // scale factor. virtual to real coordinates;
+    int scale();
 
     QVector<GameObject *> items() const;
 

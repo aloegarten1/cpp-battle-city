@@ -11,18 +11,21 @@ class GameObject: public QGraphicsPixmapItem
 {
 
 public:
-    GameObject(Game * game, int x, int y, int size);
+    GameObject(Game * game, float x, float y, bool collide);
     ~GameObject() = default;
+
     void SetTile(QString name);
     virtual void update() = 0;
+    bool collideable() {return collide_;}
+    float x() {return x_;}
+    float y(){return y_;}
+
 
 protected:
 
-    int x_;
-    int y_;
-
-    int width_;
-    int height_;
+    bool collide_;
+    float x_;
+    float y_;
 
     Game * game_;
 
