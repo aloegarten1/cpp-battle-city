@@ -4,19 +4,25 @@
 
 void Player::moveLeft()
 {
-    tank_->moveLeft();
+    tank_->setVelocity(-1,0);
 }
 
 void Player::moveRight()
 {
-    tank_->moveRight();
+    tank_->setVelocity(1,0);
 }
 void Player::moveUp()
 {
-    tank_->moveUp();
+    tank_->setVelocity(0,-1);
 }
 
 void Player::moveDown()
 {
-    tank_->moveDown();
+    tank_->setVelocity(0,1);
+}
+
+
+void Player::stop()
+{
+    tank_->setVelocity(0,0);
 }

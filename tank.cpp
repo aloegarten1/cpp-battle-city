@@ -2,26 +2,24 @@
 
 
 
-void Tank::moveLeft()
-{
+void Tank::setVelocity(int vx, int vy){
+    velocityX_=vx;
+    velocityY_=vy;
 
-    setPos(x() - 10, y());
 }
 
-void Tank::moveRight()
-{
+void Tank::update(){
+    int nx = x_ + velocityX_;
+    int ny = y_ + velocityY_;
 
-    setPos(x() + 10, y());
+    if (game_->collide(nx,ny)){
+        return;
+    }
+
+    x_=nx;
+    y_=ny;
+
+    setPos(x_,y_);
+
 }
 
-void Tank::moveUp()
-{
-
-    setPos(x(), y() - 10);
-}
-
-void Tank::moveDown()
-{
-
-    setPos(x(), y() + 10);
-}

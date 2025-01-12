@@ -18,6 +18,8 @@ public:
     void moveUp();
     void moveDown();
 
+    void stop();
+
 
 private:
     Tank * tank_;

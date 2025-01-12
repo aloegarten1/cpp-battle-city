@@ -9,9 +9,12 @@
 
 class GameObject: public QGraphicsPixmapItem
 {
+
 public:
     GameObject(Game * game, int x, int y, int size);
+    ~GameObject() = default;
     void SetTile(QString name);
+    virtual void update() = 0;
 
 protected:
 

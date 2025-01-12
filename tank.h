@@ -16,12 +16,14 @@
 class Tank : public GameObject
 {
 public:
-    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size) {}
+    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size), velocityX_(0), velocityY_(0) {}
 
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+    void setVelocity(int vx, int vy);
+    void update() override;
+
+private:
+    int velocityX_;
+    int velocityY_;
 
 };
 

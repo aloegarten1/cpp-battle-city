@@ -16,6 +16,8 @@ public:
     Wall(Game *game, int x, int y, int size) : GameObject(game, x,y,size) {
         SetTile("wall");
     }
+
+    void update() override;
 };
 
 #endif // WALL_H

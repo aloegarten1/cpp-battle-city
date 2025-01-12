@@ -1,4 +1,5 @@
 #include "game.h"
+#include "gameobject.h"
 #include "enemy.h"
 #include "tank.h"
 #include "wall.h"
@@ -70,18 +71,29 @@ void  Game::initializeMap(){
 }
 
 
-QVector<QGraphicsItem *> Game::items() const
+QVector<GameObject *> Game::items() const
 {
     return m_items;
 }
 
+void Game::update() {
+    for (auto item : m_items) {
+
+        item->update();
+       // Enemy* enemy = dynamic_cast<Enemy*>(item);
+
+        // if (enemy) {
+        //     enemy->move();
+        // }
+
+    }
+    emit gameUpdated();
+}
 
 
 void Game::movePlayerLeft()
 {
-
     m_player->moveLeft();
-
 }
 
 void Game::movePlayerRight()
@@ -97,4 +109,20 @@ void Game::movePlayerUp()
 void Game::movePlayerDown()
 {
     m_player->moveDown();
+}
+
+void Game::stopPlayer()
+{
+    m_player->stop();
+}
+
+
+void Game::doPlayerShot()
+{
+    // TODO
+}
+
+
+bool Game::collide(int x, int y){
+    return false;
 }

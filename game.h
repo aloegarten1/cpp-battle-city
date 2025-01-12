@@ -1,5 +1,6 @@
 #pragma once
 
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -11,6 +12,7 @@
 #include "tileset.h"
 
 class Player;
+class GameObject;
 
 class Game : public QObject
 {
@@ -25,8 +27,16 @@ public:
     void movePlayerRight();
     void movePlayerUp();
     void movePlayerDown();
+    void doPlayerShot();
+    void stopPlayer();
 
-    QVector<QGraphicsItem *> items() const;
+    void update();
+    bool collide(int x, int y);
+
+    QVector<GameObject *> items() const;
+
+signals:
+    void gameUpdated();
 
 private:
     Settings *m_settings;
@@ -34,12 +44,14 @@ private:
 
     TileSet m_tileset;
 
-    QVector<QGraphicsItem *> m_items;
+    QVector<GameObject *> m_items;
 
     void parseTailset();
     void initializeMap();
     void initializePlayer();
     void initializeEnemies();
+
+
 
 };
 
