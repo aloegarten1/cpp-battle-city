@@ -16,13 +16,7 @@
 class Tank : public GameObject
 {
 public:
-    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size) {
-
-        auto tl =  game->getTileset();
-        QPixmap img = tl->getTile("player1");
-        setPixmap(img.scaled(QSize(50,50),Qt::KeepAspectRatio));
-
-    }
+    Tank(Game *game, int x, int y, int size) : GameObject(game, x,y,size) {}
 
     void moveLeft();
     void moveRight();

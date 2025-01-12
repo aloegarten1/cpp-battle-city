@@ -11,7 +11,7 @@ class GameObject: public QGraphicsPixmapItem
 {
 public:
     GameObject(Game * game, int x, int y, int size);
-
+    void SetTile(QString name);
 
 protected:
 

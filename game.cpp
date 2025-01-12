@@ -1,19 +1,26 @@
 #include "game.h"
 #include "enemy.h"
 #include "tank.h"
+#include "wall.h"
 #include "player.h"
 #include <QRandomGenerator>
 
 Game::Game(Settings *settings, QObject *parent)
-    : QObject(parent), m_settings(settings), m_player(nullptr),m_tileset(TileSet(QString(":/images/images/tanks.png")))
+    : QObject(parent), m_settings(settings), m_player(nullptr),m_tileset(TileSet(QString(":/images/images/tanks2.png")))
 {
     parseTailset();
+    initializeMap();
     initializePlayer();
     initializeEnemies();
 }
 
 void Game::parseTailset(){
-    m_tileset.addTile("player1",QRect(2.0f, 2.0f, 15.0f, 15.0f));
+    m_tileset.addTile("player1",QRect(0.0f, 72.0f, 16.0f, 16.0f));
+
+    m_tileset.addTile("enemy1",QRect(0.0f, 0.0f, 16.0f, 16.0f));
+
+    m_tileset.addTile("wall1",QRect(235.0f, 0.0f, 16.0f, 16.0f));
+
 }
 
 void Game::initializeEnemies()
@@ -21,11 +28,13 @@ void Game::initializeEnemies()
     int enemiesCount = m_settings->getEnemiesCount();
     for (int i = 0; i < enemiesCount; ++i)
     {
-        Enemy *enemy = new Enemy();
-        // Place enemies at random positions within the scene
-        int x = QRandomGenerator::global()->bounded(760); // 800 - 40 (enemy width)
-        int y = QRandomGenerator::global()->bounded(560); // 600 - 40 (enemy height)
-        enemy->setPos(x, y);
+
+        int x = QRandomGenerator::global()->bounded(16);
+        int y = QRandomGenerator::global()->bounded(12);
+
+        Tank *enemy = new Tank(this, x*50, y*50, 50);
+        enemy->SetTile("enemy");
+
         m_items.append(enemy);
     }
 }
@@ -33,10 +42,33 @@ void Game::initializeEnemies()
 void Game::initializePlayer()
 {
     Tank * tank = new Tank(this, 400,300, 50);
-    m_player = new Player(tank); // No need to pass scene here
+    tank->SetTile("player");
+    m_player = new Player(tank);
+
+
 //    m_player->setPos(400, 300);
     m_items.append(tank);
 }
+
+void  Game::initializeMap(){
+    for (int i=0; i<16; i++){
+        for (int j=0; j<12; j++){
+
+            int g = QRandomGenerator::global()->bounded(100);
+
+            if (g>25){
+                continue;
+            }
+
+            Wall *wall = new Wall(this, i*50, j*50, 50);
+
+
+            m_items.append(wall);
+
+        }
+    }
+}
+
 
 QVector<QGraphicsItem *> Game::items() const
 {

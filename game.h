@@ -37,6 +37,7 @@ private:
     QVector<QGraphicsItem *> m_items;
 
     void parseTailset();
+    void initializeMap();
     void initializePlayer();
     void initializeEnemies();
 

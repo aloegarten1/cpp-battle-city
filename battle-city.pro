@@ -20,7 +20,8 @@ SOURCES += \
     settings.cpp \
     settingsmenu.cpp \
     tank.cpp \
-    tileset.cpp
+    tileset.cpp \
+    wall.cpp
 
 HEADERS += \
     enemy.h \
@@ -33,7 +34,8 @@ HEADERS += \
     settings.h \
     settingsmenu.h \
     tank.h \
-    tileset.h
+    tileset.h \
+    wall.h
 
 
 # Default rules for deployment.
