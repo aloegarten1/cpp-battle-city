@@ -14,12 +14,11 @@ public:
     GameObject(Game * game, float x, float y, bool collide);
     ~GameObject() = default;
 
-    void SetTile(QString name);
     virtual void update() = 0;
     bool collideable() {return collide_;}
     float x() {return x_;}
     float y(){return y_;}
-
+    void SetTile();
 
 protected:
 
@@ -28,6 +27,12 @@ protected:
     float y_;
 
     Game * game_;
+
+    virtual QString skin() = 0;
+
+private:
+
+
 
 };
 

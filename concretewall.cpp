@@ -4,3 +4,7 @@
 void ConcreteWall::update(){
     return;
 }
+
+QString ConcreteWall::skin(){
+    return "concreteWall1";
+}

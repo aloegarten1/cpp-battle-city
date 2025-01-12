@@ -14,10 +14,13 @@ class Wall: public GameObject
 {
 public:
     Wall(Game *game, int x, int y) : GameObject(game, x,y, true) {
-        SetTile("wall");
+
     }
 
     void update() override;
+
+protected:
+    QString skin() override;
 };
 
 #endif // WALL_H

@@ -11,11 +11,12 @@
 class ConcreteWall: public GameObject
 {
 public:
-    ConcreteWall(Game *game, int x, int y) : GameObject(game, x,y, true) {
-        SetTile("concreteWall");
-    }
+    ConcreteWall(Game *game, int x, int y) : GameObject(game, x,y, true) {};
 
     void update() override;
+
+protected:
+    QString skin() override;
 };
 
 #endif // CONCRETEWALL_H
