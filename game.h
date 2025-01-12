@@ -34,7 +34,7 @@ public:
     GameObject * collide(GameObject * obj, float x, float y);
 
     // scale factor. virtual to real coordinates;
-    int scale();
+    float scale();
 
     QVector<GameObject *> items() const;
 

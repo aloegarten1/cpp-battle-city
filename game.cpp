@@ -16,9 +16,9 @@ Game::Game(Settings *settings, QObject *parent)
     initializeEnemies();
 }
 
-int Game::scale(){
+float Game::scale(){
     // hardcoded
-    return 48;
+    return 48.;
 }
 
 void Game::parseTailset(){
@@ -149,15 +149,23 @@ GameObject * Game::collide(GameObject * obj, float x, float y){
             continue;
         }
 
-        float right1 = x + 1.;
-        float right2 = item->x() + 1.;
-        float bottom1 = y + 1.;
-        float bottom2 = item->y() + 1.;
 
-        bool collided =  !(right1 <= item->x() ||      // r1.right < r2.left
-                          x >= right2 ||               // r1.left > r2.right
-                          bottom1 <= item->y() ||      // r1.bottom > r2.top
-                          y >= bottom2);               // r1.top < r2.bottom
+
+        // int left1 = x*scale();
+        // int right1 = (x + 1.)*scale();
+        // int left2 = (item->x())*scale();
+        // int right2 = (item->x() + 1.)*scale();
+        // int top1 = y*scale();
+        // int bottom1 = (y + 1.)*scale();
+        // int top2 = (item->y() + 1.)*scale();
+        // int bottom2 = (item->y() + 1.)*scale();
+
+        // bool collided =  !(right1 < left2 ||      // r1.right < r2.left
+        //                   left1 > right2 ||               // r1.left > r2.right
+        //                   bottom1 > top2 ||      // r1.bottom > r2.top
+        //                   top1 < bottom2);               // r1.top < r2.bottom
+
+        bool collided = std::abs(x-item->x())<1 && std::abs(y-item->y())<0.8;
 
         if (collided){
             return item;
