@@ -13,7 +13,7 @@
 class Wall: public GameObject
 {
 public:
-    Wall(Game *game, int x, int y) : GameObject(game, x,y, true) {
+    Wall(Game *game, int x, int y) : GameObject(game, x,y, true, true) {
 
     }
 

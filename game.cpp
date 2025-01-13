@@ -2,6 +2,7 @@
 #include "concretewall.h"
 #include "gameobject.h"
 #include "enemy.h"
+#include "projectile.h"
 #include "tank.h"
 #include "wall.h"
 #include "player.h"
@@ -11,6 +12,19 @@ Game::Game(Settings *settings, QObject *parent)
     : QObject(parent), m_settings(settings), m_player(nullptr),m_tileset(TileSet(QString(":/images/images/tanks2.png")))
 {
     parseTailset();
+
+}
+
+Game::~Game(){
+    for (GameObject * item : m_items)
+    {
+        emit gameObjectDestroyed(item);
+        delete item;
+    }
+}
+
+
+void Game::init(){
     initializePlayer();
     initializeEnemies();
     initializeMap();
@@ -50,6 +64,28 @@ void Game::parseTailset(){
 
     m_tileset.addTile("concreteWall1",QRect(267.0f, 48.0f, 16.0f, 16.0f));
 
+    m_tileset.addTile("projectile0",QRect(235.0f, 95.0f, 16.0f, 16.0f));
+    m_tileset.addTile("projectile1",QRect(251.0f, 95.0f, 16.0f, 16.0f));
+    m_tileset.addTile("projectile2",QRect(267.0f, 95.0f, 16.0f, 16.0f));
+    m_tileset.addTile("projectile3",QRect(283.0f, 95.0f, 16.0f, 16.0f));
+    m_tileset.addTile("projectile4",QRect(267.0f, 95.0f, 16.0f, 16.0f));
+    m_tileset.addTile("projectile5",QRect(251.0f, 95.0f, 16.0f, 16.0f));
+
+}
+
+void Game::destroyGameObject(GameObject * obj){
+
+    emit gameObjectDestroyed(obj);
+
+    auto it = std::find(m_items.begin(), m_items.end(), obj);
+    m_items.erase(it);
+    delete obj;
+
+}
+
+void Game::addGameObject(GameObject * obj){
+    m_items.append(obj);
+    emit gameObjectAdded(obj);
 
 }
 
@@ -66,7 +102,7 @@ void Game::initializeEnemies()
         enemy->SetTile();
 
 
-        m_items.append(enemy);
+        addGameObject(enemy);
     }
 }
 
@@ -76,8 +112,8 @@ void Game::initializePlayer()
     tank->SetTile();
 
     m_player = new Player(tank);
+    addGameObject(tank);
 
-    m_items.append(tank);
 }
 
 void  Game::initializeMap(){
@@ -86,10 +122,10 @@ void  Game::initializeMap(){
 
         ConcreteWall *cwall = new ConcreteWall(this, ix, 0);
         cwall->SetTile();
-        m_items.append(cwall);
+        addGameObject(cwall);
         ConcreteWall *cwall2 = new ConcreteWall(this, ix, 11);
         cwall2->SetTile();
-        m_items.append(cwall2);
+        addGameObject(cwall2);
 
 
         for (int jy=1; jy<11; jy++){
@@ -110,7 +146,7 @@ void  Game::initializeMap(){
 
             Wall *wall = new Wall(this, ix, jy);
             wall->SetTile();
-            m_items.append(wall);
+            addGameObject(wall);
 
         }
     }
@@ -118,26 +154,21 @@ void  Game::initializeMap(){
     for (int j=1; j<11; j++){
         ConcreteWall *cwall = new ConcreteWall(this, 0, j);
         cwall->SetTile();
-        m_items.append(cwall);
+        addGameObject(cwall);
         ConcreteWall *cwall2 = new ConcreteWall(this, 15, j);
         cwall2->SetTile();
-        m_items.append(cwall2);
+        addGameObject(cwall2);
 
     }
 }
 
 
-QVector<GameObject *> Game::items() const
-{
-    return m_items;
-}
 
 void Game::update() {
     for (auto item : m_items) {
 
         item->update();
     }
-    emit gameUpdated();
 }
 
 
@@ -169,7 +200,28 @@ void Game::stopPlayer()
 
 void Game::doPlayerShot()
 {
-    // TODO
+    float x = m_player->tank()->x();
+    float y = m_player->tank()->y();
+    Direction d= m_player->tank()->getDirection();
+
+    switch (d) {
+    case Direction::UP:
+        y -= 1;
+        break;
+    case Direction::RIGHT:
+        x += 1;
+        break;
+    case Direction::DOWN:
+        y += 1;
+        break;
+    case Direction::LEFT:
+        x -= 1;
+        break;
+    }
+    Projectile * proj = new Projectile(this,x, y);
+    proj->setDirecton(d);
+    addGameObject(proj);
+
 }
 
 
@@ -199,6 +251,15 @@ GameObject * Game::collide(GameObject * obj, float x, float y){
         bool collided = std::abs(x-item->x())<0.75 && std::abs(y-item->y())<0.75;
 
         if (collided){
+
+            if (obj != nullptr && typeid(*obj) == typeid(Projectile)){
+                destroyGameObject(obj);
+                if (item->destructable()){
+                    destroyGameObject(item);
+                }
+            }
+
+
             return item;
         }
     }

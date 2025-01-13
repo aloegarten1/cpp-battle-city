@@ -20,6 +20,7 @@ public:
 
     void stop();
 
+    Tank * tank(){return tank_;}
 
 private:
     Tank * tank_;

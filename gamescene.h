@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QTimer>
+#include "gameobject.h"
 #include "settings.h"
 
 class Game;
@@ -27,7 +28,9 @@ protected:
 
 private slots:
     void onGameStarted(Game *game);
-    void onGameUpdated();
+    void onGameObjectCreated(GameObject *obj);
+    void onGameObjectDestroyed(GameObject *obj);
+    void onGameUpdateTimer();
 
 private:
     void initializeGame();

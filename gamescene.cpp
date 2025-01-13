@@ -19,12 +19,14 @@ GameScene::GameScene(Settings *settings, QWidget *parent)
 
     m_scene->setSceneRect(0, 0, 800, 600);
 
-    connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdated);
+    connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdateTimer);
     m_timer.start(50);  // Update every x milliseconds
+
+
 
 }
 
-void GameScene::onGameUpdated() {
+void GameScene::onGameUpdateTimer() {
     if (m_game) {
         m_game->update();
     }
@@ -92,30 +94,39 @@ void GameScene::onGameStarted(Game *game)
 
     m_game = game;
 
-    // Add all items from the game to the scene
-    for (GameObject * item : m_game->items())
-    {
-        m_scene->addItem(item);
-    }
+
+    // for (GameObject * item : m_game->items())
+    // {
+    //     m_scene->addItem(item);
+    // }
 }
+
+
+void GameScene::onGameObjectCreated(GameObject *obj){
+    m_scene->addItem(obj);
+}
+
+void GameScene::onGameObjectDestroyed(GameObject *obj){
+    m_scene->removeItem(obj);
+}
+
 
 void GameScene::initializeGame()
 {
     m_game = new Game(m_settings, this);
+    connect(m_game, &Game::gameObjectAdded, this, &GameScene::onGameObjectCreated);
+    connect(m_game, &Game::gameObjectDestroyed, this, &GameScene::onGameObjectDestroyed);
+    m_game->init();
+
     onGameStarted(m_game);
+
 }
 
 void GameScene::cleanupGame()
 {
     if (m_game)
     {
-        for (GameObject * item : m_game->items())
-        {
-            QGraphicsItem* gitem = dynamic_cast<QGraphicsItem*>(item);
 
-            m_scene->removeItem(gitem);
-            delete gitem;
-        }
         delete m_game;
     }
 

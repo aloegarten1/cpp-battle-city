@@ -1,9 +1,10 @@
 #include "gameobject.h"
 
-GameObject::GameObject(Game * game,float x, float y, bool collide): game_(game) {
+GameObject::GameObject(Game * game,float x, float y, bool collide, bool destructable): game_(game) {
     x_=x;
     y_=y;
     collide_=collide;
+    destructable_=destructable;
 
     int s = game_->scale();
     this->setPos(x*s,y*s);

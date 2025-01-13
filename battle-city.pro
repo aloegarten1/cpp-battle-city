@@ -13,11 +13,13 @@ SOURCES += \
     enemy.cpp \
     game.cpp \
     gameobject.cpp \
+    gameobjectm.cpp \
     gamescene.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
     player.cpp \
+    projectile.cpp \
     settings.cpp \
     settingsmenu.cpp \
     tank.cpp \
@@ -29,10 +31,12 @@ HEADERS += \
     enemy.h \
     game.h \
     gameobject.h \
+    gameobjectm.h \
     gamescene.h \
     mainmenu.h \
     mainwindow.h \
     player.h \
+    projectile.h \
     settings.h \
     settingsmenu.h \
     tank.h \

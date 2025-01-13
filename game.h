@@ -20,6 +20,10 @@ class Game : public QObject
 
 public:
     explicit Game(Settings *settings, QObject *parent = nullptr);
+    ~Game();
+
+    void init();
+    void update();
 
     TileSet *getTileset() {return &m_tileset; };
 
@@ -30,16 +34,18 @@ public:
     void doPlayerShot();
     void stopPlayer();
 
-    void update();
+
     GameObject * collide(GameObject * obj, float x, float y);
+
 
     // scale factor. virtual to real coordinates;
     float scale();
 
-    QVector<GameObject *> items() const;
+   // QVector<GameObject *> items() const;
 
-signals:
-    void gameUpdated();
+ signals:
+     void gameObjectAdded(GameObject * obj);
+     void gameObjectDestroyed(GameObject * obj);
 
 private:
     Settings *m_settings;
@@ -48,6 +54,10 @@ private:
     TileSet m_tileset;
 
     QVector<GameObject *> m_items;
+
+    void addGameObject(GameObject * obj);
+    void destroyGameObject(GameObject * obj);
+
 
     void parseTailset();
     void initializeMap();
