@@ -196,7 +196,7 @@ GameObject * Game::collide(GameObject * obj, float x, float y){
         //                   bottom1 > top2 ||      // r1.bottom > r2.top
         //                   top1 < bottom2);               // r1.top < r2.bottom
 
-        bool collided = std::abs(x-item->x())<1 && std::abs(y-item->y())<0.75;
+        bool collided = std::abs(x-item->x())<0.75 && std::abs(y-item->y())<0.75;
 
         if (collided){
             return item;

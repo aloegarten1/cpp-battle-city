@@ -48,7 +48,7 @@ void Tank::stop(){
 void Tank::update(){
     frame_++;
 
-    if (0 == frame_ % 5 && velocityX_!=0 && velocityY_!=0){
+    if (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0)){
         sprite_ = 1-sprite_;
         SetTile();
     }
