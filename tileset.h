@@ -9,7 +9,7 @@ class TileSet
 public:
     static TileSet *getInstance()
     {
-        static TileSet *instance = new TileSet(":/images/images/tanks2.png");
+        static TileSet *instance = new TileSet(":/images/images/tanks3.png");
         return instance;
     }
     ~TileSet();

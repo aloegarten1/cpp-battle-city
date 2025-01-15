@@ -3,5 +3,6 @@
         <file>images/tiles.png</file>
         <file>images/tanks.png</file>
         <file>images/tanks2.png</file>
+        <file>images/tanks3.png</file>
     </qresource>
 </RCC>

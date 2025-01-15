@@ -56,4 +56,14 @@ void TileSet::init()
     addTile("projectile3", QRect(283.0f, 95.0f, 16.0f, 16.0f));
     addTile("projectile4", QRect(267.0f, 95.0f, 16.0f, 16.0f));
     addTile("projectile5", QRect(251.0f, 95.0f, 16.0f, 16.0f));
+
+    addTile("enemyHQ-0", QRect(235.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-1", QRect(251.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-2", QRect(267.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-3", QRect(283.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-4", QRect(299.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-5", QRect(315.0f, 127.0f, 16.0f, 16.0f));
+    addTile("enemyHQ-6", QRect(331.0f, 127.0f, 16.0f, 16.0f));
+
+
 }

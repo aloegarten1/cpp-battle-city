@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     concretewall.cpp \
     enemy.cpp \
+    enemyhq.cpp \
     game.cpp \
     gameobject.cpp \
     gameobjectm.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
 HEADERS += \
     concretewall.h \
     enemy.h \
+    enemyhq.h \
     game.h \
     gameobject.h \
     gameobjectm.h \

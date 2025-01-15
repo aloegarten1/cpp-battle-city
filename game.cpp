@@ -1,5 +1,6 @@
 #include "game.h"
 #include "concretewall.h"
+#include "enemyhq.h"
 #include "gameobject.h"
 #include "enemy.h"
 #include "projectile.h"
@@ -83,6 +84,11 @@ void Game::initializePlayer()
 
 void Game::initializeMap()
 {
+
+
+    EnemyHQ *hq = new EnemyHQ(this, 8, 2);
+    hq->SetTile();
+    addGameObject(hq);
 
     for (int ix = 0; ix < 16; ix++)
     {
@@ -207,6 +213,13 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
             {
                 onTankKilled(dynamic_cast<Tank *>(dst));
             }
+
+            if (typeid(*dst) == typeid(EnemyHQ))
+            {
+                win();
+            }
+
+
             destroyGameObject(dst);
         }
     }
@@ -238,4 +251,8 @@ void Game::loose()
 
 void Game::win()
 {
+    for (Enemy *enemy : m_enemies)
+    {
+            enemy->kill();
+    }
 }

@@ -46,7 +46,7 @@ void GameObjectM::stop(){
 }
 
 void GameObjectM::update(){
-    frame_++;
+    GameObject::update();
 
     if (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0)){
 

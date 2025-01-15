@@ -26,9 +26,7 @@ public:
         velocityX_(0),
         velocityY_(0),
         velocity_(0.2),
-        dir_(Direction::UP),
-
-        frame_(0)   {}
+        dir_(Direction::UP)   {}
 
     void setDirecton(Direction dir);
     Direction getDirection(){ return dir_; }
@@ -43,7 +41,6 @@ protected:
     float velocity_;
     Direction dir_;
 
-    int frame_;
 
 };
 

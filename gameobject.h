@@ -14,7 +14,7 @@ public:
     GameObject(Game * game, float x, float y, bool collide, bool destructable);
     ~GameObject() = default;
 
-    virtual void update() = 0;
+    virtual void update();
     bool collideable() {return collide_;}
     bool destructable() {return destructable_;}
 
@@ -33,6 +33,7 @@ protected:
 
     Game * game_;
 
+    int frame_;
     virtual QString skin() = 0;
 
 private:
