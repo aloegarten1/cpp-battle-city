@@ -64,8 +64,8 @@ void Game::initializeEnemies()
     for (int i = 0; i < enemiesCount; ++i)
     {
 
-        int x = 2 + QRandomGenerator::global()->bounded(14);
-        int y = 2 + QRandomGenerator::global()->bounded(10);
+        int x = 2 + QRandomGenerator::global()->bounded(13);
+        int y = 2 + QRandomGenerator::global()->bounded(9);
 
         Enemy *enemy = new Enemy(this);
         enemy->initTank("enemy", x, y);
@@ -175,6 +175,10 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
             if (dst == nullptr)
             {
                 dst = item;
+
+                if (obj == nullptr){
+                    break;
+                }
                 continue;
             }
 
