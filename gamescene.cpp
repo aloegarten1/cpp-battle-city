@@ -40,7 +40,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
     case Qt::Key_Escape:
-        backToMainMenu();
+        emit backToMainMenu();
         break;
 
     case Qt::Key_Left:
@@ -67,9 +67,15 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_Up:
     case Qt::Key_Down:
     case Qt::Key_Space:
+    {
         m_game->unsetPlayerCommand(event->key());
+        break;
+    }
     default:
+    {
         QGraphicsView::keyReleaseEvent(event);
+        break;
+    }
     }
 }
 

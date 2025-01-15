@@ -23,6 +23,7 @@ SOURCES += \
     settings.cpp \
     settingsmenu.cpp \
     tank.cpp \
+    tankdriver.cpp \
     tileset.cpp \
     wall.cpp
 
@@ -40,6 +41,7 @@ HEADERS += \
     settings.h \
     settingsmenu.h \
     tank.h \
+    tankdriver.h \
     tileset.h \
     wall.h
 
