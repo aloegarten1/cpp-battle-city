@@ -9,7 +9,8 @@ GameObject::GameObject(Game *game, float x, float y, bool collide, bool destruct
     destructable_ = destructable;
     frame_ = 0;
 
-    int s = game_->scale();
+    TileSet *tl = TileSet::getInstance();
+    int s = tl->scale();
     this->setPos(x * s, y * s);
 }
 
@@ -21,7 +22,7 @@ void GameObject::setTile()
         TileSet *tl = TileSet::getInstance();
         sk = skin();
         QPixmap img = tl->getTile(sk);
-        int s = game_->scale();
+        int s = tl->scale();
         setPixmap(img.scaled(QSize(s, s), Qt::KeepAspectRatio));
     }
     catch (...)

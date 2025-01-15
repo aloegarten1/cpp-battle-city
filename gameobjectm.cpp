@@ -1,4 +1,5 @@
 #include "gameobjectm.h"
+#include "tileset.h"
 
 
 
@@ -67,7 +68,8 @@ void GameObjectM::update(){
     x_=nx;
     y_=ny;
 
-    int s = game_->scale();
+    TileSet *tl = TileSet::getInstance();
+    int s = tl->scale();
     setPos(x_*s,y_*s);
 
 }

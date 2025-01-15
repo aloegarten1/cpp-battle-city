@@ -41,11 +41,6 @@ void Game::init()
     m_timer.start(50); // Update every x milliseconds
 }
 
-float Game::scale()
-{
-    // hardcoded
-    return 48.;
-}
 
 void Game::destroyGameObject(GameObject *obj)
 {

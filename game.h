@@ -33,8 +33,6 @@ public:
 
     GameObject *collide(GameObject *obj, float x, float y);
 
-    float scale();
-
     void addGameObject(GameObject *obj);
 
 signals:
