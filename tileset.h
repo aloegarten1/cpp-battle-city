@@ -7,17 +7,21 @@
 class TileSet
 {
 public:
-    /*
-     * @param filepath: path to image
-     */
-    TileSet(const QString& filepath);
+    static TileSet *getInstance()
+    {
+        static TileSet *instance = new TileSet(":/images/images/tanks2.png");
+        return instance;
+    }
     ~TileSet();
 
-    void addTile(const QString& name, QRect crop);
-    QPixmap& getTile(const QString& name);
+    void addTile(const QString &name, QRect crop);
+    QPixmap &getTile(const QString &name);
 
 private:
-    QPixmap * _image;
+    TileSet(const QString &filepath);
+
+    void init();
+    QPixmap *_image;
     std::map<QString, QPixmap> _tiles;
 };
 
