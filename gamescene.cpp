@@ -20,14 +20,13 @@ GameScene::GameScene(Settings *settings, QWidget *parent)
     m_scene->setSceneRect(0, 0, 800, 600);
 
     connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdateTimer);
-    m_timer.start(50);  // Update every x milliseconds
-
-
-
+    m_timer.start(50); // Update every x milliseconds
 }
 
-void GameScene::onGameUpdateTimer() {
-    if (m_game) {
+void GameScene::onGameUpdateTimer()
+{
+    if (m_game)
+    {
         m_game->update();
     }
 }
@@ -45,55 +44,39 @@ void GameScene::keyPressEvent(QKeyEvent *event)
         break;
 
     case Qt::Key_Left:
-        m_game->movePlayerLeft();
-        break;
     case Qt::Key_Right:
-        m_game->movePlayerRight();
-        break;
     case Qt::Key_Up:
-        m_game->movePlayerUp();
-        break;
     case Qt::Key_Down:
-        m_game->movePlayerDown();
-        break;
-
     case Qt::Key_Space:
-        m_game->doPlayerShot();
+    {
+        m_game->setPlayerCommand(event->key());
         break;
-
+    }
 
     default:
         QGraphicsView::keyPressEvent(event);
     }
 }
 
-void GameScene::keyReleaseEvent(QKeyEvent *event)  {
-    switch (event->key()){
+void GameScene::keyReleaseEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
     case Qt::Key_Left:
-        m_game->stopPlayer();
-        break;
     case Qt::Key_Right:
-        m_game->stopPlayer();
-        break;
     case Qt::Key_Up:
-        m_game->stopPlayer();
-        break;
     case Qt::Key_Down:
-        m_game->stopPlayer();
-        break;
+    case Qt::Key_Space:
+        m_game->unsetPlayerCommand(event->key());
     default:
         QGraphicsView::keyReleaseEvent(event);
-
     }
-
 }
-
 
 void GameScene::onGameStarted(Game *game)
 {
 
     m_game = game;
-
 
     // for (GameObject * item : m_game->items())
     // {
@@ -101,15 +84,15 @@ void GameScene::onGameStarted(Game *game)
     // }
 }
 
-
-void GameScene::onGameObjectCreated(GameObject *obj){
+void GameScene::onGameObjectCreated(GameObject *obj)
+{
     m_scene->addItem(obj);
 }
 
-void GameScene::onGameObjectDestroyed(GameObject *obj){
+void GameScene::onGameObjectDestroyed(GameObject *obj)
+{
     m_scene->removeItem(obj);
 }
-
 
 void GameScene::initializeGame()
 {
@@ -119,7 +102,6 @@ void GameScene::initializeGame()
     m_game->init();
 
     onGameStarted(m_game);
-
 }
 
 void GameScene::cleanupGame()

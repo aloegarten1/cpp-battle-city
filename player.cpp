@@ -2,28 +2,75 @@
 #include <QKeyEvent>
 #include <QGraphicsScene>
 
-void Player::moveLeft()
+void Player::setCommand(int c)
 {
-
-    tank_->setDirecton(Direction::LEFT);
+    if (getCommandIdx(c) >= 0)
+    {
+        return;
+    }
+    commands_.append(c);
+    applyCommand();
 }
 
-void Player::moveRight()
+void Player::unsetCommand(int c)
 {
-    tank_->setDirecton(Direction::RIGHT);
-}
-void Player::moveUp()
-{
-    tank_->setDirecton(Direction::UP);
-}
-
-void Player::moveDown()
-{
-    tank_->setDirecton(Direction::DOWN);
+    int idx = getCommandIdx(c);
+    if (idx < 0)
+    {
+        return;
+    }
+    commands_.removeAt(idx);
+    applyCommand();
 }
 
-
-void Player::stop()
+void Player::applyCommand()
 {
-    tank_->stop();
+    bool move = false;
+    Direction dir;
+
+    for (int i = 0; i < commands_.length(); i++)
+    {
+        int c = commands_.at(i);
+
+        switch (c)
+        {
+        case Qt::Key_Left:
+            move = true;
+            dir = Direction::LEFT;
+            break;
+        case Qt::Key_Right:
+            move = true;
+            dir = Direction::RIGHT;
+            break;
+        case Qt::Key_Up:
+            move = true;
+            dir = Direction::UP;
+            break;
+        case Qt::Key_Down:
+            move = true;
+            dir = Direction::DOWN;
+            break;
+        }
+    }
+
+    if (!move)
+    {
+        tank_->stop();
+        return;
+    }
+
+    tank_->setDirecton(dir);
+}
+
+int Player::getCommandIdx(int c)
+{
+
+    for (int i = 0; i < commands_.length(); i++)
+    {
+        if (commands_.at(i) == c)
+        {
+            return i;
+        }
+    }
+    return -1;
 }

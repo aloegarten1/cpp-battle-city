@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifndef GAME_H
 #define GAME_H
 
@@ -25,47 +24,35 @@ public:
     void init();
     void update();
 
-    TileSet *getTileset() {return &m_tileset; };
+    void setPlayerCommand(int c);
+    void unsetPlayerCommand(int c);
 
-    void movePlayerLeft();
-    void movePlayerRight();
-    void movePlayerUp();
-    void movePlayerDown();
-    void doPlayerShot();
-    void stopPlayer();
-
-
-    GameObject * collide(GameObject * obj, float x, float y);
-
+    GameObject *collide(GameObject *obj, float x, float y);
 
     // scale factor. virtual to real coordinates;
     float scale();
 
-   // QVector<GameObject *> items() const;
+    // QVector<GameObject *> items() const;
 
- signals:
-     void gameObjectAdded(GameObject * obj);
-     void gameObjectDestroyed(GameObject * obj);
+signals:
+    void gameObjectAdded(GameObject *obj);
+    void gameObjectDestroyed(GameObject *obj);
 
 private:
     Settings *m_settings;
     Player *m_player;
 
-    TileSet m_tileset;
-
     QVector<GameObject *> m_items;
 
-    void addGameObject(GameObject * obj);
-    void destroyGameObject(GameObject * obj);
-
+    void addGameObject(GameObject *obj);
+    void destroyGameObject(GameObject *obj);
 
     void parseTailset();
     void initializeMap();
     void initializePlayer();
     void initializeEnemies();
 
-
-
+    void doPlayerShot();
 };
 
 #endif // GAME_H

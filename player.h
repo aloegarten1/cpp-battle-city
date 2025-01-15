@@ -6,24 +6,20 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
-#include "tank.h"
+#include "tankdriver.h"
 
-class Player
+class Player : public TankDriver
 {
 
 public:
-    Player(Tank * tank): tank_(tank) {};
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
-
-    void stop();
-
-    Tank * tank(){return tank_;}
+    Player(Game *game) : TankDriver(game), commands_() {};
+    void setCommand(int c);
+    void unsetCommand(int c);
 
 private:
-    Tank * tank_;
+    QList<int> commands_;
+    int getCommandIdx(int c);
+    void applyCommand();
 };
 
 #endif // PLAYER_H

@@ -9,84 +9,46 @@
 #include <QRandomGenerator>
 
 Game::Game(Settings *settings, QObject *parent)
-    : QObject(parent), m_settings(settings), m_player(nullptr),m_tileset(TileSet(QString(":/images/images/tanks2.png")))
+    : QObject(parent), m_settings(settings), m_player(nullptr)
 {
-    parseTailset();
-
 }
 
-Game::~Game(){
-    for (GameObject * item : m_items)
+Game::~Game()
+{
+    for (GameObject *item : m_items)
     {
         emit gameObjectDestroyed(item);
         delete item;
     }
 }
 
-
-void Game::init(){
+void Game::init()
+{
     initializePlayer();
     initializeEnemies();
     initializeMap();
 }
 
-float Game::scale(){
+float Game::scale()
+{
     // hardcoded
     return 48.;
 }
 
-void Game::parseTailset(){
-    m_tileset.addTile("player-right-1",QRect(0.0f, 72.0f, 16.0f, 16.0f));
-    m_tileset.addTile("player-right-0",QRect(0.0f, 90.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("player-down-1",QRect(17.0f, 72.0f, 16.0f, 16.0f));
-    m_tileset.addTile("player-down-0",QRect(17.0f, 90.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("player-up-1",QRect(34.0f, 72.0f, 16.0f, 16.0f));
-    m_tileset.addTile("player-up-0",QRect(34.0f, 90.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("player-left-1",QRect(51.0f, 72.0f, 16.0f, 16.0f));
-    m_tileset.addTile("player-left-0",QRect(51.0f, 90.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("enemy-right-1",QRect(0.0f, 0.0f, 16.0f, 16.0f));
-    m_tileset.addTile("enemy-right-0",QRect(0.0f, 17.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("enemy-down-1",QRect(17.0f, 0.0f, 16.0f, 16.0f));
-    m_tileset.addTile("enemy-down-0",QRect(17.0f, 17.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("enemy-up-1",QRect(34.0f, 0.0f, 16.0f, 16.0f));
-    m_tileset.addTile("enemy-up-0",QRect(34.0f, 17.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("enemy-left-1",QRect(51.0f, 0.0f, 16.0f, 16.0f));
-    m_tileset.addTile("enemy-left-0",QRect(51.0f, 17.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("wall1",QRect(235.0f, 0.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("concreteWall1",QRect(267.0f, 48.0f, 16.0f, 16.0f));
-
-    m_tileset.addTile("projectile0",QRect(235.0f, 95.0f, 16.0f, 16.0f));
-    m_tileset.addTile("projectile1",QRect(251.0f, 95.0f, 16.0f, 16.0f));
-    m_tileset.addTile("projectile2",QRect(267.0f, 95.0f, 16.0f, 16.0f));
-    m_tileset.addTile("projectile3",QRect(283.0f, 95.0f, 16.0f, 16.0f));
-    m_tileset.addTile("projectile4",QRect(267.0f, 95.0f, 16.0f, 16.0f));
-    m_tileset.addTile("projectile5",QRect(251.0f, 95.0f, 16.0f, 16.0f));
-
-}
-
-void Game::destroyGameObject(GameObject * obj){
+void Game::destroyGameObject(GameObject *obj)
+{
 
     emit gameObjectDestroyed(obj);
 
     auto it = std::find(m_items.begin(), m_items.end(), obj);
     m_items.erase(it);
     delete obj;
-
 }
 
-void Game::addGameObject(GameObject * obj){
+void Game::addGameObject(GameObject *obj)
+{
     m_items.append(obj);
     emit gameObjectAdded(obj);
-
 }
 
 void Game::initializeEnemies()
@@ -95,12 +57,11 @@ void Game::initializeEnemies()
     for (int i = 0; i < enemiesCount; ++i)
     {
 
-        int x = 2+ QRandomGenerator::global()->bounded(14);
-        int y = 2+ QRandomGenerator::global()->bounded(10);
+        int x = 2 + QRandomGenerator::global()->bounded(14);
+        int y = 2 + QRandomGenerator::global()->bounded(10);
 
         Tank *enemy = new Tank(this, x, y, "enemy");
         enemy->SetTile();
-
 
         addGameObject(enemy);
     }
@@ -108,17 +69,16 @@ void Game::initializeEnemies()
 
 void Game::initializePlayer()
 {
-    Tank * tank = new Tank(this, 1,10,"player");
-    tank->SetTile();
-
-    m_player = new Player(tank);
-    addGameObject(tank);
-
+    m_player = new Player(this);
+    m_player->initTank("player", 1, 10);
+    addGameObject(m_player->getTank());
 }
 
-void  Game::initializeMap(){
+void Game::initializeMap()
+{
 
-    for (int ix=0; ix<16; ix++){
+    for (int ix = 0; ix < 16; ix++)
+    {
 
         ConcreteWall *cwall = new ConcreteWall(this, ix, 0);
         cwall->SetTile();
@@ -127,84 +87,83 @@ void  Game::initializeMap(){
         cwall2->SetTile();
         addGameObject(cwall2);
 
+        for (int jy = 1; jy < 11; jy++)
+        {
 
-        for (int jy=1; jy<11; jy++){
-
-            if (ix==1 && jy==10){
+            if (ix == 1 && jy == 10)
+            {
                 continue;
             }
 
-            if (collide(nullptr,ix,jy)){
+            if (collide(nullptr, ix, jy))
+            {
                 continue;
             }
 
             int g = QRandomGenerator::global()->bounded(100);
 
-            if (g>25){
+            if (g > 25)
+            {
                 continue;
             }
 
             Wall *wall = new Wall(this, ix, jy);
             wall->SetTile();
             addGameObject(wall);
-
         }
     }
 
-    for (int j=1; j<11; j++){
+    for (int j = 1; j < 11; j++)
+    {
         ConcreteWall *cwall = new ConcreteWall(this, 0, j);
         cwall->SetTile();
         addGameObject(cwall);
         ConcreteWall *cwall2 = new ConcreteWall(this, 15, j);
         cwall2->SetTile();
         addGameObject(cwall2);
-
     }
 }
 
-
-
-void Game::update() {
-    for (auto item : m_items) {
+void Game::update()
+{
+    for (auto item : m_items)
+    {
 
         item->update();
     }
 }
 
-
-void Game::movePlayerLeft()
+void Game::setPlayerCommand(int c)
 {
-    m_player->moveLeft();
+
+    switch (c)
+    {
+    case Qt::Key_Space:
+    {
+        doPlayerShot();
+        break;
+    }
+    default:
+    {
+        m_player->setCommand(c);
+        break;
+    }
+    }
 }
 
-void Game::movePlayerRight()
+void Game::unsetPlayerCommand(int c)
 {
-    m_player->moveRight();
+    m_player->unsetCommand(c);
 }
-
-void Game::movePlayerUp()
-{
-    m_player->moveUp();
-}
-
-void Game::movePlayerDown()
-{
-    m_player->moveDown();
-}
-
-void Game::stopPlayer()
-{
-    m_player->stop();
-}
-
 
 void Game::doPlayerShot()
 {
-    float x = m_player->tank()->x();
-    float y = m_player->tank()->y();
-    Direction d= m_player->tank()->getDirection();
+    float x = m_player->getTank()->x();
+    float y = m_player->getTank()->y();
+    Direction d = m_player->getTank()->getDirection();
 
-    switch (d) {
+    switch (d)
+    {
     case Direction::UP:
         y -= 1;
         break;
@@ -218,57 +177,59 @@ void Game::doPlayerShot()
         x -= 1;
         break;
     }
-    Projectile * proj = new Projectile(this,x, y);
+    Projectile *proj = new Projectile(this, x, y);
     proj->setDirecton(d);
     addGameObject(proj);
-
 }
 
+GameObject *Game::collide(GameObject *obj, float x, float y)
+{
 
-GameObject * Game::collide(GameObject * obj, float x, float y){
+    GameObject *dst = nullptr;
 
-    GameObject * dst = nullptr;
-
-    for (GameObject * item: m_items){
-        if (obj == item || !item->collideable()){
+    for (GameObject *item : m_items)
+    {
+        if (obj == item || !item->collideable())
+        {
             continue;
         }
 
-        bool collided = std::abs(x-item->x())<0.75 && std::abs(y-item->y())<0.75;
+        bool collided = std::abs(x - item->x()) < 0.75 && std::abs(y - item->y()) < 0.75;
 
-        if (collided){
-            if (dst == nullptr){
+        if (collided)
+        {
+            if (dst == nullptr)
+            {
                 dst = item;
                 continue;
             }
 
             // TODO simplify
-            float oldDisstance = (obj->x()-dst->x())*(obj->x()-dst->x())+(obj->y()-dst->y())*(obj->y()-dst->y()); // distance between obj & dst (square)
-            float newDisstance = (obj->x()-item->x())*(obj->x()-item->x())+(obj->y()-item->y())*(obj->y()-item->y()); // distance between obj & item (square)
+            float oldDisstance = (obj->x() - dst->x()) * (obj->x() - dst->x()) + (obj->y() - dst->y()) * (obj->y() - dst->y());     // distance between obj & dst (square)
+            float newDisstance = (obj->x() - item->x()) * (obj->x() - item->x()) + (obj->y() - item->y()) * (obj->y() - item->y()); // distance between obj & item (square)
 
-            if (oldDisstance>newDisstance){
+            if (oldDisstance > newDisstance)
+            {
                 dst = item;
                 continue;
             }
-
         }
-
     }
 
+    if (dst != nullptr)
+    {
 
-    if (dst != nullptr){
-
-        if (obj != nullptr && typeid(*obj) == typeid(Projectile)){
+        if (obj != nullptr && typeid(*obj) == typeid(Projectile))
+        {
             destroyGameObject(obj);
-            if (dst->destructable()){
+            if (dst->destructable())
+            {
                 destroyGameObject(dst);
             }
         }
 
-
         return dst;
     }
-
 
     return nullptr;
 }
