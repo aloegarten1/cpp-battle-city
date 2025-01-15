@@ -15,6 +15,7 @@ public:
         GameObjectM(game, x,y, true, true),
         mark_(mark)    {}
 
+    void fire();
 
 
 protected:
@@ -24,6 +25,8 @@ protected:
 private:
 
     QString mark_;
+    // fire rate controll
+    int reloadCountdown_;
 
 };
 

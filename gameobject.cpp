@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "tileset.h"
 
 GameObject::GameObject(Game *game, float x, float y, bool collide, bool destructable) : game_(game)
 {
@@ -24,5 +25,6 @@ void GameObject::SetTile()
     }
     catch (...)
     {
+        // TODO
     }
 }

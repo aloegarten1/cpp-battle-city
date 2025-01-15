@@ -20,6 +20,13 @@ Game::~Game()
         emit gameObjectDestroyed(item);
         delete item;
     }
+
+    for (Enemy *item : m_enemies)
+    {
+        delete item;
+    }
+
+    delete m_player;
 }
 
 void Game::init()
@@ -60,10 +67,10 @@ void Game::initializeEnemies()
         int x = 2 + QRandomGenerator::global()->bounded(14);
         int y = 2 + QRandomGenerator::global()->bounded(10);
 
-        Tank *enemy = new Tank(this, x, y, "enemy");
-        enemy->SetTile();
-
-        addGameObject(enemy);
+        Enemy *enemy = new Enemy(this);
+        enemy->initTank("enemy", x, y);
+        addGameObject(enemy->getTank());
+        m_enemies.append(enemy);
     }
 }
 
@@ -90,12 +97,12 @@ void Game::initializeMap()
         for (int jy = 1; jy < 11; jy++)
         {
 
-            if (ix == 1 && jy == 10)
+            if (ix == 1 && jy == 10) // hardcoded player position
             {
                 continue;
             }
 
-            if (collide(nullptr, ix, jy))
+            if (collide(nullptr, ix, jy)) // enemies, etc
             {
                 continue;
             }
@@ -126,7 +133,14 @@ void Game::initializeMap()
 
 void Game::update()
 {
-    for (auto item : m_items)
+
+    for (Enemy *enemy : m_enemies)
+    {
+
+        enemy->AI();
+    }
+
+    for (GameObject *item : m_items)
     {
 
         item->update();
@@ -136,50 +150,12 @@ void Game::update()
 void Game::setPlayerCommand(int c)
 {
 
-    switch (c)
-    {
-    case Qt::Key_Space:
-    {
-        doPlayerShot();
-        break;
-    }
-    default:
-    {
-        m_player->setCommand(c);
-        break;
-    }
-    }
+    m_player->setCommand(c);
 }
 
 void Game::unsetPlayerCommand(int c)
 {
     m_player->unsetCommand(c);
-}
-
-void Game::doPlayerShot()
-{
-    float x = m_player->getTank()->x();
-    float y = m_player->getTank()->y();
-    Direction d = m_player->getTank()->getDirection();
-
-    switch (d)
-    {
-    case Direction::UP:
-        y -= 1;
-        break;
-    case Direction::RIGHT:
-        x += 1;
-        break;
-    case Direction::DOWN:
-        y += 1;
-        break;
-    case Direction::LEFT:
-        x -= 1;
-        break;
-    }
-    Projectile *proj = new Projectile(this, x, y);
-    proj->setDirecton(d);
-    addGameObject(proj);
 }
 
 GameObject *Game::collide(GameObject *obj, float x, float y)
@@ -216,20 +192,50 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
         }
     }
 
-    if (dst != nullptr)
+    if (dst == nullptr)
     {
-
-        if (obj != nullptr && typeid(*obj) == typeid(Projectile))
-        {
-            destroyGameObject(obj);
-            if (dst->destructable())
-            {
-                destroyGameObject(dst);
-            }
-        }
-
-        return dst;
+        return nullptr;
     }
 
-    return nullptr;
+    if (obj != nullptr && typeid(*obj) == typeid(Projectile))
+    {
+        destroyGameObject(obj);
+
+        if (dst->destructable())
+        {
+            if (typeid(*dst) == typeid(Tank))
+            {
+                onTankKilled(dynamic_cast<Tank *>(dst));
+            }
+            destroyGameObject(dst);
+        }
+    }
+
+    return dst;
+}
+
+void Game::onTankKilled(Tank *tank)
+{
+    if (m_player->getTank() == tank)
+    {
+        m_player->kill();
+        loose();
+        return;
+    }
+
+    for (Enemy *enemy : m_enemies)
+    {
+        if (enemy->getTank() == tank)
+        {
+            enemy->kill();
+        }
+    }
+}
+
+void Game::loose()
+{
+}
+
+void Game::win()
+{
 }

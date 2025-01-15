@@ -8,9 +8,10 @@
 #include <QGraphicsItem>
 
 #include "settings.h"
-#include "tileset.h"
 
+class Tank;
 class Player;
+class Enemy;
 class GameObject;
 
 class Game : public QObject
@@ -29,10 +30,9 @@ public:
 
     GameObject *collide(GameObject *obj, float x, float y);
 
-    // scale factor. virtual to real coordinates;
     float scale();
 
-    // QVector<GameObject *> items() const;
+    void addGameObject(GameObject *obj);
 
 signals:
     void gameObjectAdded(GameObject *obj);
@@ -43,8 +43,8 @@ private:
     Player *m_player;
 
     QVector<GameObject *> m_items;
+    QVector<Enemy *> m_enemies;
 
-    void addGameObject(GameObject *obj);
     void destroyGameObject(GameObject *obj);
 
     void parseTailset();
@@ -52,7 +52,10 @@ private:
     void initializePlayer();
     void initializeEnemies();
 
-    void doPlayerShot();
+    void onTankKilled(Tank *tank);
+
+    void loose();
+    void win();
 };
 
 #endif // GAME_H

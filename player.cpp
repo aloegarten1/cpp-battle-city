@@ -4,6 +4,8 @@
 
 void Player::setCommand(int c)
 {
+    if (!alive_) return;
+
     if (getCommandIdx(c) >= 0)
     {
         return;
@@ -14,6 +16,8 @@ void Player::setCommand(int c)
 
 void Player::unsetCommand(int c)
 {
+    if (!alive_) return;
+
     int idx = getCommandIdx(c);
     if (idx < 0)
     {
@@ -25,6 +29,8 @@ void Player::unsetCommand(int c)
 
 void Player::applyCommand()
 {
+    if (!alive_) return;
+
     bool move = false;
     Direction dir;
 
@@ -49,6 +55,9 @@ void Player::applyCommand()
         case Qt::Key_Down:
             move = true;
             dir = Direction::DOWN;
+            break;
+        case Qt::Key_Space:
+            tank_->fire();
             break;
         }
     }
