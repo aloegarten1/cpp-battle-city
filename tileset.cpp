@@ -65,5 +65,7 @@ void TileSet::init()
     addTile("enemyHQ-5", QRect(315.0f, 127.0f, 16.0f, 16.0f));
     addTile("enemyHQ-6", QRect(331.0f, 127.0f, 16.0f, 16.0f));
 
+    addTile("win", QRect(129.0f, 143.0f, 128.0f, 72.0f));
+    addTile("loose", QRect(0.0f, 143.0f, 128.0f, 72.0f));
 
 }
