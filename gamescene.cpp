@@ -19,16 +19,6 @@ GameScene::GameScene(Settings *settings, QWidget *parent)
 
     m_scene->setSceneRect(0, 0, 800, 600);
 
-    connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdateTimer);
-    m_timer.start(50); // Update every x milliseconds
-}
-
-void GameScene::onGameUpdateTimer()
-{
-    if (m_game)
-    {
-        m_game->update();
-    }
 }
 
 void GameScene::keyPressEvent(QKeyEvent *event)
@@ -81,13 +71,7 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
 
 void GameScene::onGameStarted(Game *game)
 {
-
     m_game = game;
-
-    // for (GameObject * item : m_game->items())
-    // {
-    //     m_scene->addItem(item);
-    // }
 }
 
 void GameScene::onGameObjectCreated(QGraphicsPixmapItem *obj)

@@ -2,7 +2,6 @@
 #define GAME_SCENE_H
 
 #include <QGraphicsView>
-#include <QTimer>
 #include "gameobject.h"
 #include "settings.h"
 
@@ -30,7 +29,6 @@ private slots:
     void onGameStarted(Game *game);
     void onGameObjectCreated(QGraphicsPixmapItem *obj);
     void onGameObjectDestroyed(GameObject *obj);
-    void onGameUpdateTimer();
 
 private:
     void initializeGame();
@@ -39,7 +37,7 @@ private:
     Settings *m_settings;
     Game *m_game;
     QGraphicsScene *m_scene;
-    QTimer m_timer;
+
 };
 
 #endif // GAME_SCENE_H

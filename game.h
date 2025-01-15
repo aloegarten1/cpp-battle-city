@@ -1,5 +1,6 @@
 #pragma once
 
+#include "qtimer.h"
 #ifndef GAME_H
 #define GAME_H
 
@@ -23,7 +24,6 @@ public:
     ~Game();
 
     void init();
-    void update();
 
     void setPlayerCommand(int c);
     void unsetPlayerCommand(int c);
@@ -38,9 +38,13 @@ signals:
     void gameObjectAdded(QGraphicsPixmapItem *obj);
     void gameObjectDestroyed(GameObject *obj);
 
+private slots:
+    void onGameUpdateTimer();
+
 private:
     Settings *m_settings;
     Player *m_player;
+    QTimer m_timer;
 
     QVector<GameObject *> m_items;
     QVector<Enemy *> m_enemies;

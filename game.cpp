@@ -36,6 +36,10 @@ void Game::init()
     initializePlayer();
     initializeEnemies();
     initializeMap();
+
+    connect(&m_timer, &QTimer::timeout, this, &Game::onGameUpdateTimer);
+    m_timer.start(50); // Update every x milliseconds
+
 }
 
 float Game::scale()
@@ -137,7 +141,7 @@ void Game::initializeMap()
     }
 }
 
-void Game::update()
+void Game::onGameUpdateTimer()
 {
 
     for (Enemy *enemy : m_enemies)
@@ -246,12 +250,14 @@ void Game::onTankKilled(Tank *tank)
 
 void Game::loose()
 {
+    m_timer.stop();
     popup("loose");
 }
 
 void Game::win()
 {
 
+    m_timer.stop();
     for (Enemy *enemy : m_enemies)
     {
         enemy->kill();
