@@ -227,42 +227,48 @@ void Game::doPlayerShot()
 
 GameObject * Game::collide(GameObject * obj, float x, float y){
 
+    GameObject * dst = nullptr;
+
     for (GameObject * item: m_items){
         if (obj == item || !item->collideable()){
             continue;
         }
 
-
-
-        // int left1 = x*scale();
-        // int right1 = (x + 1.)*scale();
-        // int left2 = (item->x())*scale();
-        // int right2 = (item->x() + 1.)*scale();
-        // int top1 = y*scale();
-        // int bottom1 = (y + 1.)*scale();
-        // int top2 = (item->y() + 1.)*scale();
-        // int bottom2 = (item->y() + 1.)*scale();
-
-        // bool collided =  !(right1 < left2 ||      // r1.right < r2.left
-        //                   left1 > right2 ||               // r1.left > r2.right
-        //                   bottom1 > top2 ||      // r1.bottom > r2.top
-        //                   top1 < bottom2);               // r1.top < r2.bottom
-
         bool collided = std::abs(x-item->x())<0.75 && std::abs(y-item->y())<0.75;
 
         if (collided){
-
-            if (obj != nullptr && typeid(*obj) == typeid(Projectile)){
-                destroyGameObject(obj);
-                if (item->destructable()){
-                    destroyGameObject(item);
-                }
+            if (dst == nullptr){
+                dst = item;
+                continue;
             }
 
+            // TODO simplify
+            float oldDisstance = (obj->x()-dst->x())*(obj->x()-dst->x())+(obj->y()-dst->y())*(obj->y()-dst->y()); // distance between obj & dst (square)
+            float newDisstance = (obj->x()-item->x())*(obj->x()-item->x())+(obj->y()-item->y())*(obj->y()-item->y()); // distance between obj & item (square)
 
-            return item;
+            if (oldDisstance>newDisstance){
+                dst = item;
+                continue;
+            }
+
         }
+
     }
+
+
+    if (dst != nullptr){
+
+        if (obj != nullptr && typeid(*obj) == typeid(Projectile)){
+            destroyGameObject(obj);
+            if (dst->destructable()){
+                destroyGameObject(dst);
+            }
+        }
+
+
+        return dst;
+    }
+
 
     return nullptr;
 }
