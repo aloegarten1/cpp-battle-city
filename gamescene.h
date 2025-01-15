@@ -28,7 +28,7 @@ protected:
 
 private slots:
     void onGameStarted(Game *game);
-    void onGameObjectCreated(GameObject *obj);
+    void onGameObjectCreated(QGraphicsPixmapItem *obj);
     void onGameObjectDestroyed(GameObject *obj);
     void onGameUpdateTimer();
 

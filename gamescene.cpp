@@ -90,7 +90,7 @@ void GameScene::onGameStarted(Game *game)
     // }
 }
 
-void GameScene::onGameObjectCreated(GameObject *obj)
+void GameScene::onGameObjectCreated(QGraphicsPixmapItem *obj)
 {
     m_scene->addItem(obj);
 }

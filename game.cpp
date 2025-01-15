@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "projectile.h"
 #include "tank.h"
+#include "tileset.h"
 #include "wall.h"
 #include "player.h"
 #include <QRandomGenerator>
@@ -84,7 +85,6 @@ void Game::initializePlayer()
 
 void Game::initializeMap()
 {
-
 
     EnemyHQ *hq = new EnemyHQ(this, 8, 2);
     hq->SetTile();
@@ -219,7 +219,6 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
                 win();
             }
 
-
             destroyGameObject(dst);
         }
     }
@@ -247,12 +246,24 @@ void Game::onTankKilled(Tank *tank)
 
 void Game::loose()
 {
+    popup("loose");
 }
 
 void Game::win()
 {
+
     for (Enemy *enemy : m_enemies)
     {
-            enemy->kill();
+        enemy->kill();
     }
+    popup("win");
+}
+
+void Game::popup(QString name)
+{
+    TileSet *tl = TileSet::getInstance();
+    QPixmap img = tl->getTile(name);
+    QGraphicsPixmapItem *pop = new QGraphicsPixmapItem(img);
+    pop->setPos(336, 264);
+    emit gameObjectAdded(pop);
 }

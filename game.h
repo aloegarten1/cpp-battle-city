@@ -35,7 +35,7 @@ public:
     void addGameObject(GameObject *obj);
 
 signals:
-    void gameObjectAdded(GameObject *obj);
+    void gameObjectAdded(QGraphicsPixmapItem *obj);
     void gameObjectDestroyed(GameObject *obj);
 
 private:
@@ -54,6 +54,7 @@ private:
 
     void onTankKilled(Tank *tank);
 
+    void popup(QString name);
     void loose();
     void win();
 };
