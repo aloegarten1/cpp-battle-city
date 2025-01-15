@@ -1,6 +1,9 @@
 #include "wall.h"
 
 void Wall::update(){
+    if (frame_ == 0){
+        setTile();
+    }
     return;
 }
 

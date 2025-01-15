@@ -35,7 +35,7 @@ void GameObjectM::setDirecton(Direction dir){
     velocityX_=vx;
     velocityY_=vy;
 
-    SetTile();
+    setTile();
 
 }
 
@@ -48,9 +48,9 @@ void GameObjectM::stop(){
 void GameObjectM::update(){
     GameObject::update();
 
-    if (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0)){
+    if (frame_ < 2 || (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0))){
 
-        SetTile();
+        setTile();
     }
 
     if (velocityX_==0 && velocityY_==0){

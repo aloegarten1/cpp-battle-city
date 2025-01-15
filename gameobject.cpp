@@ -13,13 +13,13 @@ GameObject::GameObject(Game *game, float x, float y, bool collide, bool destruct
     this->setPos(x * s, y * s);
 }
 
-void GameObject::SetTile()
+void GameObject::setTile()
 {
     QString sk;
     try
     {
         TileSet *tl = TileSet::getInstance();
-         sk = skin();
+        sk = skin();
         QPixmap img = tl->getTile(sk);
         int s = game_->scale();
         setPixmap(img.scaled(QSize(s, s), Qt::KeepAspectRatio));
@@ -31,7 +31,7 @@ void GameObject::SetTile()
     }
 }
 
-
-void GameObject::update(){
+void GameObject::update()
+{
     frame_++;
 }

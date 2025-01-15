@@ -1,13 +1,13 @@
 #include "enemyhq.h"
 
-void EnemyHQ::update(){
+void EnemyHQ::update()
+{
     GameObject::update();
 
-        SetTile();
-
+    setTile();
 }
 
-
-QString EnemyHQ::skin(){
+QString EnemyHQ::skin()
+{
     return "enemyHQ-" + QString::number(frame_ % 7);
 }

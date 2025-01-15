@@ -23,9 +23,12 @@ public:
     explicit Game(Settings *settings, QObject *parent = nullptr);
     ~Game();
 
+    // game objects createion: player, enemies, walls, etc
     void init();
 
+    // key down
     void setPlayerCommand(int c);
+    // key up
     void unsetPlayerCommand(int c);
 
     GameObject *collide(GameObject *obj, float x, float y);

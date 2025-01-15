@@ -1,10 +1,15 @@
 #include "concretewall.h"
 
-
-void ConcreteWall::update(){
+void ConcreteWall::update()
+{
+    if (frame_ == 0)
+    {
+        setTile();
+    }
     return;
 }
 
-QString ConcreteWall::skin(){
+QString ConcreteWall::skin()
+{
     return "concreteWall1";
 }

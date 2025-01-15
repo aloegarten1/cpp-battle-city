@@ -39,7 +39,6 @@ void Game::init()
 
     connect(&m_timer, &QTimer::timeout, this, &Game::onGameUpdateTimer);
     m_timer.start(50); // Update every x milliseconds
-
 }
 
 float Game::scale()
@@ -91,17 +90,14 @@ void Game::initializeMap()
 {
 
     EnemyHQ *hq = new EnemyHQ(this, 8, 2);
-    hq->SetTile();
     addGameObject(hq);
 
     for (int ix = 0; ix < 16; ix++)
     {
 
         ConcreteWall *cwall = new ConcreteWall(this, ix, 0);
-        cwall->SetTile();
         addGameObject(cwall);
         ConcreteWall *cwall2 = new ConcreteWall(this, ix, 11);
-        cwall2->SetTile();
         addGameObject(cwall2);
 
         for (int jy = 1; jy < 11; jy++)
@@ -125,7 +121,6 @@ void Game::initializeMap()
             }
 
             Wall *wall = new Wall(this, ix, jy);
-            wall->SetTile();
             addGameObject(wall);
         }
     }
@@ -133,10 +128,8 @@ void Game::initializeMap()
     for (int j = 1; j < 11; j++)
     {
         ConcreteWall *cwall = new ConcreteWall(this, 0, j);
-        cwall->SetTile();
         addGameObject(cwall);
         ConcreteWall *cwall2 = new ConcreteWall(this, 15, j);
-        cwall2->SetTile();
         addGameObject(cwall2);
     }
 }
