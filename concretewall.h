@@ -13,7 +13,7 @@ class ConcreteWall: public GameObject
 public:
     ConcreteWall(Game *game, int x, int y) : GameObject(game, x,y, true,false) {};
 
-    void update() override;
+ //   void update() override;
 
 protected:
     QString skin() override;

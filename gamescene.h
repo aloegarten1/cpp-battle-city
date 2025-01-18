@@ -22,17 +22,18 @@ signals:
     void backToMainMenu();
 
 protected:
+    void paintEvent(QPaintEvent* event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
     void onGameStarted(Game *game);
-    void onGameObjectCreated(QGraphicsPixmapItem *obj);
-    void onGameObjectDestroyed(GameObject *obj);
 
 private:
     void initializeGame();
     void cleanupGame();
+
+    void drawObject(QPainter& painter, const QPointF& position, const QString& textureKey);
 
     Settings *m_settings;
     Game *m_game;

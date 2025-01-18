@@ -17,7 +17,7 @@ public:
 
     }
 
-    void update() override;
+ //   void update() override;
 
 protected:
     QString skin() override;

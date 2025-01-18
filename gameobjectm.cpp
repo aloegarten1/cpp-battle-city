@@ -36,7 +36,7 @@ void GameObjectM::setDirecton(Direction dir){
     velocityX_=vx;
     velocityY_=vy;
 
-    setTile();
+    //setTile();
 
 }
 
@@ -49,10 +49,10 @@ void GameObjectM::stop(){
 void GameObjectM::update(){
     GameObject::update();
 
-    if (frame_ < 2 || (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0))){
+    // if (frame_ < 2 || (0 == frame_ % 5 && (velocityX_!=0 || velocityY_!=0))){
 
-        setTile();
-    }
+    //     setTile();
+    // }
 
     if (velocityX_==0 && velocityY_==0){
         return;
@@ -68,8 +68,8 @@ void GameObjectM::update(){
     x_=nx;
     y_=ny;
 
-    TileSet *tl = TileSet::getInstance();
-    int s = tl->scale();
-    setPos(x_*s,y_*s);
+    // TileSet *tl = TileSet::getInstance();
+    // int s = tl->scale();
+    // setPos(x_*s,y_*s);
 
 }

@@ -74,14 +74,14 @@ void GameScene::onGameStarted(Game *game)
     m_game = game;
 }
 
-void GameScene::onGameObjectCreated(QGraphicsPixmapItem *obj)
+void GameScene::onGameObjectCreated(GameObject *obj)
 {
-    m_scene->addItem(obj);
+ //   m_scene->addItem(obj);
 }
 
 void GameScene::onGameObjectDestroyed(GameObject *obj)
 {
-    m_scene->removeItem(obj);
+   // m_scene->removeItem(obj);
 }
 
 void GameScene::initializeGame()

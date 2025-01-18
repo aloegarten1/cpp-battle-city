@@ -14,7 +14,7 @@ class EnemyHQ: public GameObject
 {
 public:
     EnemyHQ(Game *game, int x, int y) : GameObject(game, x,y, true,true) {};
-    void update () override;
+//    void update () override;
 
 protected:
     QString skin() override;

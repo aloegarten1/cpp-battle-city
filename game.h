@@ -36,7 +36,7 @@ public:
     void addGameObject(GameObject *obj);
 
 signals:
-    void gameObjectAdded(QGraphicsPixmapItem *obj);
+    void gameObjectAdded(GameObject *obj);
     void gameObjectDestroyed(GameObject *obj);
 
 private slots:

@@ -8,29 +8,25 @@ GameObject::GameObject(Game *game, float x, float y, bool collide, bool destruct
     collide_ = collide;
     destructable_ = destructable;
     frame_ = 0;
-
-    TileSet *tl = TileSet::getInstance();
-    int s = tl->scale();
-    this->setPos(x * s, y * s);
 }
 
-void GameObject::setTile()
-{
-    QString sk;
-    try
-    {
-        TileSet *tl = TileSet::getInstance();
-        sk = skin();
-        QPixmap img = tl->getTile(sk);
-        int s = tl->scale();
-        setPixmap(img.scaled(QSize(s, s), Qt::KeepAspectRatio));
-    }
-    catch (...)
-    {
-        qDebug() << "setTile " << sk;
-        // TODO
-    }
-}
+// void GameObject::setTile()
+// {
+//     QString sk;
+//     try
+//     {
+//         TileSet *tl = TileSet::getInstance();
+//         sk = skin();
+//         QPixmap img = tl->getTile(sk);
+//         int s = tl->scale();
+//         setPixmap(img.scaled(QSize(s, s), Qt::KeepAspectRatio));
+//     }
+//     catch (...)
+//     {
+//         qDebug() << "setTile " << sk;
+//         // TODO
+//     }
+// }
 
 void GameObject::update()
 {

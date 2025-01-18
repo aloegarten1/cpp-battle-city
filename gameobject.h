@@ -7,7 +7,7 @@
 #include <QGraphicsScene>
 #include "game.h"
 
-class GameObject : public QGraphicsPixmapItem
+class GameObject
 {
 
 public:
@@ -22,6 +22,7 @@ public:
     float y() { return y_; }
 
 protected:
+    QGraphicsPixmapItem pixmap_;
     bool collide_;
     bool destructable_;
     float x_;
@@ -30,7 +31,8 @@ protected:
     Game *game_;
 
     int frame_;
-    void setTile();
+
+    //    void setTile();
     virtual QString skin() = 0;
 
 private:

@@ -259,9 +259,9 @@ void Game::win()
 
 void Game::popup(QString name)
 {
-    TileSet *tl = TileSet::getInstance();
-    QPixmap img = tl->getTile(name);
-    QGraphicsPixmapItem *pop = new QGraphicsPixmapItem(img);
-    pop->setPos(336, 264);
-    emit gameObjectAdded(pop);
+    // TileSet *tl = TileSet::getInstance();
+    // QPixmap img = tl->getTile(name);
+    // QGraphicsPixmapItem *pop = new QGraphicsPixmapItem(img);
+    // pop->setPos(336, 264);
+    // emit gameObjectAdded(pop);
 }
