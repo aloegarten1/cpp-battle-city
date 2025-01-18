@@ -3,8 +3,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
-
 #include "tankdriver.h"
 
 class Player : public TankDriver

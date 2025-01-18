@@ -9,11 +9,12 @@
 #include <QPushButton>
 #include "settings.h"
 
-class SettingsMenu : public QWidget {
+class SettingsMenu : public QWidget
+{
     Q_OBJECT
 
 public:
-    explicit SettingsMenu(Settings* settings, QWidget *parent = nullptr);
+    explicit SettingsMenu(Settings *settings, QWidget *parent = nullptr);
 
 signals:
     void settingsSaved();
@@ -24,7 +25,7 @@ private slots:
     void onSaveClicked();
 
 private:
-    Settings* m_settings;
+    Settings *m_settings;
 };
 
 #endif // SETTINGSMENU_H

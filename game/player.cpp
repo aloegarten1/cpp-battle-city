@@ -4,7 +4,8 @@
 
 void Player::setCommand(int c)
 {
-    if (!alive_) return;
+    if (!alive_)
+        return;
 
     if (getCommandIdx(c) >= 0)
     {
@@ -16,7 +17,8 @@ void Player::setCommand(int c)
 
 void Player::unsetCommand(int c)
 {
-    if (!alive_) return;
+    if (!alive_)
+        return;
 
     int idx = getCommandIdx(c);
     if (idx < 0)
@@ -29,7 +31,8 @@ void Player::unsetCommand(int c)
 
 void Player::applyCommand()
 {
-    if (!alive_) return;
+    if (!alive_)
+        return;
 
     bool move = false;
     Direction dir;

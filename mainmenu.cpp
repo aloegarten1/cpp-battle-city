@@ -1,12 +1,13 @@
 #include "mainmenu.h"
 
 MainMenu::MainMenu(QWidget *parent)
-    : QWidget(parent) {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    : QWidget(parent)
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
 
-    QPushButton* startButton = new QPushButton("Start Game", this);
-    QPushButton* settingsButton = new QPushButton("Settings", this);
-    QPushButton* exitButton = new QPushButton("Exit", this);
+    QPushButton *startButton = new QPushButton("Start Game", this);
+    QPushButton *settingsButton = new QPushButton("Settings", this);
+    QPushButton *exitButton = new QPushButton("Exit", this);
 
     layout->addWidget(startButton);
     layout->addWidget(settingsButton);

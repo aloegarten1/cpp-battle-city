@@ -2,47 +2,29 @@
 #define GAME_SCENE_H
 
 #include <QGraphicsView>
-#include <QTimer>
-#include "settings.h"
 
-class Game;
+class GameController;
 
 class GameScene : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    GameScene(Settings *settings, QWidget *parent = nullptr);
-    ~GameScene()
-    {
-        cleanupGame();
-    }
+    GameScene(QWidget *parent = nullptr);
+    ~GameScene() = default;
 
-
-
-signals:
-    void backToMainMenu();
+    void setController(GameController *controller);
+    void update();
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
 
-private slots:
-    void onGameStarted(Game *game);
-    void onGameUpdateTimer();
-
 private:
-    void initializeGame();
-    void cleanupGame();
-
-    void drawObject(QPainter& painter, const QPointF& position, const QString& textureKey);
-
-    QTimer m_timer;
-    Settings *m_settings;
-    Game *m_game;
-    QGraphicsScene *m_scene;
-
+    void drawObject(QPainter &painter, const QPointF &position, const QString &textureKey);
+    QGraphicsScene *scene_;
+    GameController *controller_;
 };
 
 #endif // GAME_SCENE_H

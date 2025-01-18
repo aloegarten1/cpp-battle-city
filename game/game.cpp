@@ -11,23 +11,23 @@
 #include "player.h"
 
 Game::Game(Settings *settings)
-    :  m_settings(settings), m_player(nullptr)
+    : state_(GameState::RUNNING), settings_(settings), player_(nullptr), items_(), enemies_()
 {
 }
 
 Game::~Game()
 {
-    for (GameObject *item : m_items)
+    for (GameObject *item : items_)
     {
         delete item;
     }
 
-    for (Enemy *item : m_enemies)
+    for (Enemy *item : enemies_)
     {
         delete item;
     }
 
-    delete m_player;
+    delete player_;
 }
 
 void Game::init()
@@ -35,21 +35,59 @@ void Game::init()
     initializePlayer();
     initializeEnemies();
     initializeMap();
-
 }
 
+void Game::setState(GameState state)
+{
+
+    switch (state)
+    {
+    case GameState::RUNNING:
+    {
+        if (state_ == GameState::PAUSED)
+        {
+            state_ = state;
+        }
+        break;
+    }
+    case GameState::WIN:
+    case GameState::LOOSE:
+    case GameState::PAUSED:
+    {
+        if (state_ == GameState::RUNNING)
+        {
+            state_ = state;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void Game::update()
+{
+    for (Enemy *enemy : enemies_)
+    {
+        enemy->AI();
+    }
+
+    for (GameObject *item : items_)
+    {
+        item->update();
+    }
+}
 
 void Game::destroyGameObject(GameObject *obj)
 {
-    auto it = std::find(m_items.begin(), m_items.end(), obj);
-    m_items.erase(it);
+    auto it = std::find(items_.begin(), items_.end(), obj);
+    items_.erase(it);
     delete obj;
 }
 
 void Game::addGameObject(GameObject *obj)
 {
-    m_items.append(obj);
-
+    items_.append(obj);
 }
 
 void Game::initializeEnemies()
@@ -59,7 +97,7 @@ void Game::initializeEnemies()
     std::uniform_int_distribution<> dis13(0, 13);
     std::uniform_int_distribution<> dis9(0, 9);
 
-    int enemiesCount = m_settings->getEnemiesCount();
+    int enemiesCount = settings_->getEnemiesCount();
     for (int i = 0; i < enemiesCount; ++i)
     {
 
@@ -69,15 +107,15 @@ void Game::initializeEnemies()
         Enemy *enemy = new Enemy(this);
         enemy->initTank("enemy", x, y);
         addGameObject(enemy->getTank());
-        m_enemies.append(enemy);
+        enemies_.append(enemy);
     }
 }
 
 void Game::initializePlayer()
 {
-    m_player = new Player(this);
-    m_player->initTank("player", 1, 10);
-    addGameObject(m_player->getTank());
+    player_ = new Player(this);
+    player_->initTank("player", 1, 10);
+    addGameObject(player_->getTank());
 }
 
 void Game::initializeMap()
@@ -131,17 +169,15 @@ void Game::initializeMap()
     }
 }
 
-
-
 void Game::setPlayerCommand(int c)
 {
 
-    m_player->setCommand(c);
+    player_->setCommand(c);
 }
 
 void Game::unsetPlayerCommand(int c)
 {
-    m_player->unsetCommand(c);
+    player_->unsetCommand(c);
 }
 
 GameObject *Game::collide(GameObject *obj, float x, float y)
@@ -149,7 +185,7 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
 
     GameObject *dst = nullptr;
 
-    for (GameObject *item : m_items)
+    for (GameObject *item : items_)
     {
         if (obj == item || !item->collideable())
         {
@@ -164,7 +200,8 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
             {
                 dst = item;
 
-                if (obj == nullptr){
+                if (obj == nullptr)
+                {
                     break;
                 }
                 continue;
@@ -212,14 +249,14 @@ GameObject *Game::collide(GameObject *obj, float x, float y)
 
 void Game::onTankKilled(Tank *tank)
 {
-    if (m_player->getTank() == tank)
+    if (player_->getTank() == tank)
     {
-        m_player->kill();
+        player_->kill();
         loose();
         return;
     }
 
-    for (Enemy *enemy : m_enemies)
+    for (Enemy *enemy : enemies_)
     {
         if (enemy->getTank() == tank)
         {
@@ -230,26 +267,15 @@ void Game::onTankKilled(Tank *tank)
 
 void Game::loose()
 {
-
-    popup("loose");
+    setState(GameState::LOOSE);
 }
 
 void Game::win()
 {
 
-
-    for (Enemy *enemy : m_enemies)
+    for (Enemy *enemy : enemies_)
     {
         enemy->kill();
     }
-    popup("win");
-}
-
-void Game::popup(QString name)
-{
-    // TileSet *tl = TileSet::getInstance();
-    // QPixmap img = tl->getTile(name);
-    // QGraphicsPixmapItem *pop = new QGraphicsPixmapItem(img);
-    // pop->setPos(336, 264);
-    // emit gameObjectAdded(pop);
+    setState(GameState::WIN);
 }

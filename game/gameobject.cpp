@@ -9,8 +9,6 @@ GameObject::GameObject(Game *game, float x, float y, bool collide, bool destruct
     frame_ = 0;
 }
 
-
-
 void GameObject::update()
 {
     frame_++;

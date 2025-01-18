@@ -1,7 +1,6 @@
 #include "wall.h"
 
-
-
-QString Wall::skin(){
+QString Wall::skin()
+{
     return "wall1";
 }

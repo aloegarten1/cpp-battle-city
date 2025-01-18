@@ -6,28 +6,21 @@
 #include "game.h"
 #include "gameobjectm.h"
 
-
-
 class Tank : public GameObjectM
 {
 public:
-    Tank(Game *game, float x, float y,QString mark ) :
-        GameObjectM(game, x,y, true, true),
-        mark_(mark)    {}
+    Tank(Game *game, float x, float y, QString mark) : GameObjectM(game, x, y, true, true),
+                                                       mark_(mark), reloadCountdown_(0) {}
 
     void fire();
 
-
 protected:
-
     QString skin() override;
 
 private:
-
     QString mark_;
 
     int reloadCountdown_; // fire rate controll
-
 };
 
 #endif // TANK_H

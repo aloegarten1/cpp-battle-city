@@ -69,7 +69,6 @@ void TileSet::init()
     addTile("loose", QRect(0.0f, 146.0f, 128.0f, 72.0f));
 }
 
-
 float TileSet::scale()
 {
     // hardcoded

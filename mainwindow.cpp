@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "gamecontroller.h"
 #include "mainmenu.h"
 #include "gamescene.h"
 #include "settingsmenu.h"
@@ -24,14 +25,17 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::onStartGame()
 {
-    GameScene *gameScene = new GameScene(&m_settings, this);
-    connect(gameScene, &GameScene::backToMainMenu, this, &MainWindow::onBackToMainMenu);
+    GameScene *gameScene = new GameScene(this);
+    GameController *controller = new GameController(gameScene, &m_settings, this);
+    gameScene->setController(controller);
+
+    connect(controller, &GameController::backToMainMenu, this, &MainWindow::onBackToMainMenu);
 
     m_stackedWidget->addWidget(gameScene);
     m_stackedWidget->setCurrentWidget(gameScene);
 
     // Clean up old game scene when switching back to main menu
-    connect(gameScene, &GameScene::backToMainMenu, [this, gameScene]()
+    connect(controller, &GameController::backToMainMenu, [this, gameScene]()
             {
         m_stackedWidget->removeWidget(gameScene);
         gameScene->deleteLater(); });

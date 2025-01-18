@@ -11,8 +11,8 @@ void TankDriver::initTank(QString tile, float x, float y)
     tank_->update();
 }
 
-
-void TankDriver::kill(){
+void TankDriver::kill()
+{
     alive_ = false;
     tank_->stop();
 }

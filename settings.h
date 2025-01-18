@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QSettings>
 
-class Settings : public QObject {
+class Settings : public QObject
+{
     Q_OBJECT
 
 public:

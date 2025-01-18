@@ -6,8 +6,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-
-class MainMenu : public QWidget {
+class MainMenu : public QWidget
+{
     Q_OBJECT
 
 public:

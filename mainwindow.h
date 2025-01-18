@@ -8,7 +8,8 @@
 #include "settingsmenu.h"
 #include "settings.h"
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -21,10 +22,10 @@ private slots:
     void onBackToMainMenu();
 
 private:
-    QStackedWidget* m_stackedWidget;
-    MainMenu* m_mainMenu;
-    GameScene* m_gameScene;
-    SettingsMenu* m_settingsMenu;
+    QStackedWidget *m_stackedWidget;
+    MainMenu *m_mainMenu;
+    GameScene *m_gameScene;
+    SettingsMenu *m_settingsMenu;
     Settings m_settings;
 };
 

@@ -1,46 +1,49 @@
 #include "gamescene.h"
 #include "game/game.h"
 #include "game/gameobject.h"
+#include "gamecontroller.h"
 #include "qevent.h"
 #include "tileset.h"
 #include <QGraphicsScene>
 
-GameScene::GameScene(Settings *settings, QWidget *parent)
-    : QGraphicsView(parent), m_settings(settings), m_game(nullptr)
+GameScene::GameScene(QWidget *parent)
+    : QGraphicsView(parent)
 {
+    controller_ = nullptr;
 
-    m_scene = new QGraphicsScene(this);
-    setScene(m_scene);
-
-    initializeGame();
+    scene_ = new QGraphicsScene(this);
+    setScene(scene_);
 
     // Set up the view
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    m_scene->setSceneRect(0, 0, 800, 600);
+    scene_->setSceneRect(0, 0, 800, 600);
+}
 
+void GameScene::setController(GameController *controller)
+{
+    controller_ = controller;
 }
 
 void GameScene::keyPressEvent(QKeyEvent *event)
 {
-    if (m_game == nullptr)
-    {
-        return;
-    }
+
     switch (event->key())
     {
+    case Qt::Key_P:
     case Qt::Key_Escape:
-        emit backToMainMenu();
-        break;
-
     case Qt::Key_Left:
     case Qt::Key_Right:
     case Qt::Key_Up:
     case Qt::Key_Down:
     case Qt::Key_Space:
     {
-        m_game->setPlayerCommand(event->key());
+        if (controller_ == nullptr)
+        {
+            return;
+        }
+        controller_->handleKeyPress(event);
         break;
     }
 
@@ -51,6 +54,7 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 
 void GameScene::keyReleaseEvent(QKeyEvent *event)
 {
+
     switch (event->key())
     {
     case Qt::Key_Left:
@@ -59,7 +63,11 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_Down:
     case Qt::Key_Space:
     {
-        m_game->unsetPlayerCommand(event->key());
+        if (controller_ == nullptr)
+        {
+            return;
+        }
+        controller_->handleKeyRelease(event);
         break;
     }
     default:
@@ -70,69 +78,60 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-void GameScene::onGameStarted(Game *game)
-{
-    m_game = game;
-
-    connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdateTimer);
-    m_timer.start(50); // Update every x milliseconds
-
-}
-
-
-void GameScene::initializeGame()
-{
-    m_game = new Game(m_settings);
-    m_game->init();
-    onGameStarted(m_game);
-}
-
-void GameScene::cleanupGame()
-{
-    if (m_game)
-    {
-
-        delete m_game;
-    }
-
-    delete m_scene;
-}
-
-
-
-
-void GameScene::onGameUpdateTimer()
+void GameScene::update()
 {
 
-    // for (Enemy *enemy : m_enemies)
-    // {
-
-    //     enemy->AI();
-    // }
-
-    // for (GameObject *item : m_items)
-    // {
-
-    //     item->update();
-    // }
+    viewport()->update();
 }
 
-
-
-void GameScene::paintEvent(QPaintEvent* event) {
+void GameScene::paintEvent(QPaintEvent *event)
+{
 
     QGraphicsView::paintEvent(event);
-    QPainter painter(viewport());
 
-    TileSet * tl = TileSet::getInstance();
-    float scale = tl->scale();
-    for (GameObject * obj : m_game->getObjects()) {
-
-        QPointF position = QPointF(obj->x()*scale,obj->y()*scale);
-        QString textureKey = obj->skin();
-        const QPixmap& pixmap = tl->getTile(textureKey);
-        painter.drawPixmap(position.x(), position.y(), pixmap.scaled(scale,scale));
-
+    if (controller_ == nullptr)
+    {
+        return;
     }
 
+    QPainter painter(viewport());
+
+    GameState state = controller_->getGameState();
+
+    TileSet *tl = TileSet::getInstance();
+    float scale = tl->scale();
+
+    switch (state)
+    {
+    case GameState::RUNNING:
+    {
+        for (GameObject *obj : controller_->getObjects())
+        {
+            QPointF position = QPointF(obj->x() * scale, obj->y() * scale);
+            QString textureKey = obj->skin();
+            const QPixmap &pixmap = tl->getTile(textureKey);
+            painter.drawPixmap(position.x(), position.y(), pixmap.scaled(scale, scale));
+        }
+
+        break;
+    }
+    case GameState::PAUSED:
+    {
+        const QPixmap &pixmap = tl->getTile("pause");
+        painter.drawPixmap(336, 264, pixmap);
+        break;
+    }
+    case GameState::WIN:
+    {
+        const QPixmap &pixmap = tl->getTile("win");
+        painter.drawPixmap(336, 264, pixmap);
+        break;
+    }
+    case GameState::LOOSE:
+    {
+        const QPixmap &pixmap = tl->getTile("loose");
+        painter.drawPixmap(336, 264, pixmap);
+        break;
+    }
+    }
 }

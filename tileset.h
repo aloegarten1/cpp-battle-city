@@ -17,10 +17,8 @@ public:
     void addTile(const QString &name, QRect crop);
     QPixmap &getTile(const QString &name);
 
-
     // image scale factor
     float scale();
-
 
 private:
     TileSet(const QString &filepath);

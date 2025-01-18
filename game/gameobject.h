@@ -3,7 +3,6 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-
 #include "game.h"
 
 class GameObject
@@ -23,7 +22,6 @@ public:
     virtual QString skin() = 0;
 
 protected:
-
     bool collide_;
     bool destructable_;
     float x_;
@@ -32,7 +30,6 @@ protected:
     Game *game_;
 
     int frame_;
-
 
 private:
 };
