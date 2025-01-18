@@ -21,7 +21,21 @@ void GameController::handleKeyPress(QKeyEvent *event)
     {
     case Qt::Key_P:
     {
-        // TODO pause
+        GameState state = game_->getState();
+        if (state == GameState::RUNNING)
+        {
+            game_->setState(GameState::PAUSED);
+            timer_.stop();
+            view_->update();
+            break;
+        }
+
+        if (state == GameState::PAUSED)
+        {
+            game_->setState(GameState::RUNNING);
+            timer_.start();
+            break;
+        }
         break;
     }
     case Qt::Key_Escape:

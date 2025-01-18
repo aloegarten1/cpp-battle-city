@@ -67,6 +67,8 @@ void TileSet::init()
 
     addTile("win", QRect(129.0f, 146.0f, 128.0f, 72.0f));
     addTile("loose", QRect(0.0f, 146.0f, 128.0f, 72.0f));
+
+    addTile("pause", QRect(0.0f, 218.0f, 128.0f, 72.0f));
 }
 
 float TileSet::scale()
