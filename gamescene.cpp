@@ -104,13 +104,13 @@ void GameScene::paintEvent(QPaintEvent* event) {
     QPainter painter(viewport());
 
     TileSet * tl = TileSet::getInstance();
-
+    float scale = tl->scale();
     for (GameObject * obj : m_game->getObjects()) {
 
-        QPointF position = QPointF(obj->x()*tl->scale(),obj->y()*tl->scale());
+        QPointF position = QPointF(obj->x()*scale,obj->y()*scale);
         QString textureKey = obj->skin();
         const QPixmap& pixmap = tl->getTile(textureKey);
-        painter.drawPixmap(position.x(), position.y(), pixmap);
+        painter.drawPixmap(position.x(), position.y(), pixmap.scaled(scale,scale));
 
     }
 
