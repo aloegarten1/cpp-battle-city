@@ -2,7 +2,6 @@
 #define GAME_SCENE_H
 
 #include <QGraphicsView>
-#include "gameobject.h"
 #include "settings.h"
 
 class Game;

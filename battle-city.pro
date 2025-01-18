@@ -9,43 +9,45 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    concretewall.cpp \
-    enemy.cpp \
-    enemyhq.cpp \
-    game.cpp \
-    gameobject.cpp \
-    gameobjectm.cpp \
+    game/concretewall.cpp \
+    game/enemy.cpp \
+    game/enemyhq.cpp \
+    game/game.cpp \
+    game/gameobject.cpp \
+    game/gameobjectm.cpp \
+    game/player.cpp \
+    game/projectile.cpp \
+    game/tank.cpp \
+    game/tankdriver.cpp \
+    game/wall.cpp \
+    gamecontroller.cpp \
     gamescene.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp \
-    player.cpp \
-    projectile.cpp \
     settings.cpp \
     settingsmenu.cpp \
-    tank.cpp \
-    tankdriver.cpp \
-    tileset.cpp \
-    wall.cpp
+    tileset.cpp 
 
 HEADERS += \
-    concretewall.h \
-    enemy.h \
-    enemyhq.h \
-    game.h \
-    gameobject.h \
-    gameobjectm.h \
+    game/concretewall.h \
+    game/enemy.h \
+    game/enemyhq.h \
+    game/game.h \
+    game/gameobject.h \
+    game/gameobjectm.h \
+    game/player.h \
+    game/projectile.h \
+    game/tank.h \
+    game/tankdriver.h \
+    game/wall.h \
+    gamecontroller.h \
     gamescene.h \
     mainmenu.h \
     mainwindow.h \
-    player.h \
-    projectile.h \
     settings.h \
     settingsmenu.h \
-    tank.h \
-    tankdriver.h \
-    tileset.h \
-    wall.h
+    tileset.h 
 
 
 # Default rules for deployment.

@@ -8,7 +8,7 @@
 
 
 #include "game.h"
-#include <gameobject.h>
+#include "gameobject.h"
 
 enum class Direction : int{
     UP =1,

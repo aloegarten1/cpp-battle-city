@@ -21,6 +21,8 @@ public:
     float x() { return x_; }
     float y() { return y_; }
 
+    virtual QString skin() = 0;
+
 protected:
     QGraphicsPixmapItem pixmap_;
     bool collide_;
@@ -32,8 +34,6 @@ protected:
 
     int frame_;
 
-    //    void setTile();
-    virtual QString skin() = 0;
 
 private:
 };

@@ -26,6 +26,8 @@ public:
     // game objects createion: player, enemies, walls, etc
     void init();
 
+    QVector<GameObject *> getObjects() {return m_items; }
+
     // key down
     void setPlayerCommand(int c);
     // key up

@@ -1,7 +1,8 @@
 #include "gamescene.h"
-#include "game.h"
-#include "gameobject.h"
+#include "game/game.h"
+#include "game/gameobject.h"
 #include "qevent.h"
+#include "tileset.h"
 #include <QGraphicsScene>
 
 GameScene::GameScene(Settings *settings, QWidget *parent)
@@ -74,23 +75,11 @@ void GameScene::onGameStarted(Game *game)
     m_game = game;
 }
 
-void GameScene::onGameObjectCreated(GameObject *obj)
-{
- //   m_scene->addItem(obj);
-}
-
-void GameScene::onGameObjectDestroyed(GameObject *obj)
-{
-   // m_scene->removeItem(obj);
-}
 
 void GameScene::initializeGame()
 {
     m_game = new Game(m_settings, this);
-    connect(m_game, &Game::gameObjectAdded, this, &GameScene::onGameObjectCreated);
-    connect(m_game, &Game::gameObjectDestroyed, this, &GameScene::onGameObjectDestroyed);
     m_game->init();
-
     onGameStarted(m_game);
 }
 
@@ -103,4 +92,26 @@ void GameScene::cleanupGame()
     }
 
     delete m_scene;
+}
+
+
+
+
+
+void GameScene::paintEvent(QPaintEvent* event) {
+
+    QGraphicsView::paintEvent(event);
+    QPainter painter(viewport());
+
+    TileSet * tl = TileSet::getInstance();
+
+    for (GameObject * obj : m_game->getObjects()) {
+
+        QPointF position = QPointF(obj->x()*tl->scale(),obj->y()*tl->scale());
+        QString textureKey = obj->skin();
+        const QPixmap& pixmap = tl->getTile(textureKey);
+        painter.drawPixmap(position.x(), position.y(), pixmap);
+
+    }
+
 }
