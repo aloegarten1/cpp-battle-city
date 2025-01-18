@@ -3,8 +3,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QGraphicsRectItem>
-#include <QGraphicsScene>
+
 
 #include "tankdriver.h"
 

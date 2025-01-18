@@ -1,4 +1,4 @@
-#include <QRandomGenerator>
+#include <random>
 #include "enemy.h"
 
 
@@ -12,7 +12,11 @@ void Enemy::AI(){
         return;
     }
 
-    int coin =  QRandomGenerator::global()->bounded(8);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 8);
+
+    int coin =  dis(gen);
 
     switch (coin) {
     case 1:

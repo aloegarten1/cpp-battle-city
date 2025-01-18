@@ -2,8 +2,7 @@
 #define ENEMY_H
 
 #include "tankdriver.h"
-#include <QGraphicsScene>
-#include <QGraphicsRectItem>
+
 
 class Enemy : public TankDriver
 {

@@ -1,12 +1,6 @@
 #ifndef GAMEOBJECTM_H
 #define GAMEOBJECTM_H
 
-#include <QGraphicsRectItem>
-#include <QGraphicsScene>
-#include <QPixmap>
-#include <QRect>
-
-
 #include "game.h"
 #include "gameobject.h"
 

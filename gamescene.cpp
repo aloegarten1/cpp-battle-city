@@ -73,12 +73,16 @@ void GameScene::keyReleaseEvent(QKeyEvent *event)
 void GameScene::onGameStarted(Game *game)
 {
     m_game = game;
+
+    connect(&m_timer, &QTimer::timeout, this, &GameScene::onGameUpdateTimer);
+    m_timer.start(50); // Update every x milliseconds
+
 }
 
 
 void GameScene::initializeGame()
 {
-    m_game = new Game(m_settings, this);
+    m_game = new Game(m_settings);
     m_game->init();
     onGameStarted(m_game);
 }
@@ -95,6 +99,23 @@ void GameScene::cleanupGame()
 }
 
 
+
+
+void GameScene::onGameUpdateTimer()
+{
+
+    // for (Enemy *enemy : m_enemies)
+    // {
+
+    //     enemy->AI();
+    // }
+
+    // for (GameObject *item : m_items)
+    // {
+
+    //     item->update();
+    // }
+}
 
 
 

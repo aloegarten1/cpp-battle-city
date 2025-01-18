@@ -25,8 +25,8 @@ protected:
 private:
 
     QString mark_;
-    // fire rate controll
-    int reloadCountdown_;
+
+    int reloadCountdown_; // fire rate controll
 
 };
 

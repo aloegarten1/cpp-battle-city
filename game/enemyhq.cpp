@@ -1,11 +1,5 @@
 #include "enemyhq.h"
 
-// void EnemyHQ::update()
-// {
-//     GameObject::update();
-
-//     setTile();
-// }
 
 QString EnemyHQ::skin()
 {

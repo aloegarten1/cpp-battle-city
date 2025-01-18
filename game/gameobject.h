@@ -3,8 +3,7 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
+
 #include "game.h"
 
 class GameObject
@@ -12,7 +11,7 @@ class GameObject
 
 public:
     GameObject(Game *game, float x, float y, bool collide, bool destructable);
-    ~GameObject() = default;
+    virtual ~GameObject() = default;
 
     virtual void update();
     bool collideable() { return collide_; }
@@ -24,7 +23,7 @@ public:
     virtual QString skin() = 0;
 
 protected:
-    QGraphicsPixmapItem pixmap_;
+
     bool collide_;
     bool destructable_;
     float x_;

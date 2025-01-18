@@ -1,3 +1,5 @@
+#include <random>
+
 #include "game.h"
 #include "concretewall.h"
 #include "enemyhq.h"
@@ -5,13 +7,11 @@
 #include "enemy.h"
 #include "projectile.h"
 #include "tank.h"
-#include "tileset.h"
 #include "wall.h"
 #include "player.h"
-#include <QRandomGenerator>
 
-Game::Game(Settings *settings, QObject *parent)
-    : QObject(parent), m_settings(settings), m_player(nullptr)
+Game::Game(Settings *settings)
+    :  m_settings(settings), m_player(nullptr)
 {
 }
 
@@ -19,7 +19,6 @@ Game::~Game()
 {
     for (GameObject *item : m_items)
     {
-        emit gameObjectDestroyed(item);
         delete item;
     }
 
@@ -37,16 +36,11 @@ void Game::init()
     initializeEnemies();
     initializeMap();
 
-    connect(&m_timer, &QTimer::timeout, this, &Game::onGameUpdateTimer);
-    m_timer.start(50); // Update every x milliseconds
 }
 
 
 void Game::destroyGameObject(GameObject *obj)
 {
-
-    emit gameObjectDestroyed(obj);
-
     auto it = std::find(m_items.begin(), m_items.end(), obj);
     m_items.erase(it);
     delete obj;
@@ -55,17 +49,22 @@ void Game::destroyGameObject(GameObject *obj)
 void Game::addGameObject(GameObject *obj)
 {
     m_items.append(obj);
-    emit gameObjectAdded(obj);
+
 }
 
 void Game::initializeEnemies()
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis13(0, 13);
+    std::uniform_int_distribution<> dis9(0, 9);
+
     int enemiesCount = m_settings->getEnemiesCount();
     for (int i = 0; i < enemiesCount; ++i)
     {
 
-        int x = 2 + QRandomGenerator::global()->bounded(13);
-        int y = 2 + QRandomGenerator::global()->bounded(9);
+        int x = 2 + dis13(gen);
+        int y = 2 + dis9(gen);
 
         Enemy *enemy = new Enemy(this);
         enemy->initTank("enemy", x, y);
@@ -83,6 +82,9 @@ void Game::initializePlayer()
 
 void Game::initializeMap()
 {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis100(0, 100);
 
     EnemyHQ *hq = new EnemyHQ(this, 8, 2);
     addGameObject(hq);
@@ -108,7 +110,7 @@ void Game::initializeMap()
                 continue;
             }
 
-            int g = QRandomGenerator::global()->bounded(100);
+            int g = dis100(gen);
 
             if (g > 25)
             {
@@ -129,21 +131,7 @@ void Game::initializeMap()
     }
 }
 
-void Game::onGameUpdateTimer()
-{
 
-    for (Enemy *enemy : m_enemies)
-    {
-
-        enemy->AI();
-    }
-
-    for (GameObject *item : m_items)
-    {
-
-        item->update();
-    }
-}
 
 void Game::setPlayerCommand(int c)
 {
@@ -242,14 +230,14 @@ void Game::onTankKilled(Tank *tank)
 
 void Game::loose()
 {
-    m_timer.stop();
+
     popup("loose");
 }
 
 void Game::win()
 {
 
-    m_timer.stop();
+
     for (Enemy *enemy : m_enemies)
     {
         enemy->kill();

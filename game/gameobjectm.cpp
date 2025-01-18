@@ -1,6 +1,4 @@
 #include "gameobjectm.h"
-#include "tileset.h"
-
 
 
 void GameObjectM::setDirecton(Direction dir){

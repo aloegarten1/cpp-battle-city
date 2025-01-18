@@ -1,12 +1,10 @@
 #pragma once
 
-#include "qtimer.h"
+
 #ifndef GAME_H
 #define GAME_H
 
-#include <QObject>
-#include <QVector>
-#include <QGraphicsItem>
+
 
 #include "settings.h"
 
@@ -15,15 +13,15 @@ class Player;
 class Enemy;
 class GameObject;
 
-class Game : public QObject
+class Game
 {
-    Q_OBJECT
+
 
 public:
-    explicit Game(Settings *settings, QObject *parent = nullptr);
+    explicit Game(Settings *settings);
     ~Game();
 
-    // game objects createion: player, enemies, walls, etc
+
     void init();
 
     QVector<GameObject *> getObjects() {return m_items; }
@@ -37,17 +35,10 @@ public:
 
     void addGameObject(GameObject *obj);
 
-signals:
-    void gameObjectAdded(GameObject *obj);
-    void gameObjectDestroyed(GameObject *obj);
-
-private slots:
-    void onGameUpdateTimer();
 
 private:
     Settings *m_settings;
     Player *m_player;
-    QTimer m_timer;
 
     QVector<GameObject *> m_items;
     QVector<Enemy *> m_enemies;
