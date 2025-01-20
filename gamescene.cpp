@@ -105,7 +105,7 @@ void GameScene::paintEvent(QPaintEvent *event)
     {
     case GameState::RUNNING:
     {
-        painter.setOpacity(0.75);
+        painter.setOpacity(1);
 
         for (GameObject *obj : controller_->getObjects())
         {
