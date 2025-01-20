@@ -35,10 +35,12 @@ void MainWindow::onStartGame()
     m_stackedWidget->setCurrentWidget(gameScene);
 
     // Clean up old game scene when switching back to main menu
-    connect(controller, &GameController::backToMainMenu, [this, gameScene]()
+    connect(controller, &GameController::backToMainMenu, [this, gameScene, controller]()
             {
         m_stackedWidget->removeWidget(gameScene);
-        gameScene->deleteLater(); });
+        gameScene->deleteLater();
+        delete controller;
+    });
 }
 
 void MainWindow::onOpenSettings()
