@@ -13,8 +13,12 @@ public:
     virtual ~GameObject() = default;
 
     virtual void update();
+
+    void kill() { alive_ = true; }
+
     bool collideable() { return collide_; }
     bool destructable() { return destructable_; }
+    bool alive() { return alive_; }
 
     float x() { return x_; }
     float y() { return y_; }
@@ -22,8 +26,11 @@ public:
     virtual QString skin() = 0;
 
 protected:
+    bool alive_ = true;
     bool collide_;
     bool destructable_;
+
+    // Probably qreal.
     float x_;
     float y_;
 

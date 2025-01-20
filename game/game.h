@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef GAME_H
 #define GAME_H
@@ -52,7 +52,7 @@ private:
 
     void destroyGameObject(GameObject *obj);
 
-    void parseTailset();
+    void parseTileset();
     void initializeMap();
     void initializePlayer();
     void initializeEnemies();

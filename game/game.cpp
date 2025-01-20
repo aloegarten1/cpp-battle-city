@@ -74,6 +74,10 @@ void Game::update()
 
     for (GameObject *item : items_)
     {
+        if (!item->alive()) {
+            delete item;
+            continue;
+        }
         item->update();
     }
 }
@@ -81,8 +85,9 @@ void Game::update()
 void Game::destroyGameObject(GameObject *obj)
 {
     auto it = std::find(items_.begin(), items_.end(), obj);
+    if (items_.end() == it) { return; }
     items_.erase(it);
-    delete obj;
+    obj->kill();
 }
 
 void Game::addGameObject(GameObject *obj)
