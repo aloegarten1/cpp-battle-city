@@ -69,18 +69,37 @@ void Game::update()
 {
     for (Enemy *enemy : enemies_)
     {
+        if (state_ != GameState::RUNNING){
+            return;
+        }
+
         enemy->AI();
     }
 
     for (GameObject *item : items_)
     {
-        if (!item->alive())
-        {
-            delete item;
+        if (state_ != GameState::RUNNING){
+            return;
+        }
+
+        if (!item->alive()){
             continue;
         }
+
         item->update();
     }
+
+    for (GameObject *des : destroyQueue_){
+        auto it = std::find(items_.begin(), items_.end(), des);
+        if (items_.end() == it)
+        {
+            continue;
+        }
+        items_.erase(it);
+        delete des;
+
+    }
+
 }
 
 void Game::destroyGameObject(GameObject *obj)
@@ -90,8 +109,13 @@ void Game::destroyGameObject(GameObject *obj)
     {
         return;
     }
-    items_.erase(it);
+
     obj->kill();
+    destroyQueue_.append(obj);
+
+    // items_.erase(it);
+    // delete obj;
+
 }
 
 void Game::addGameObject(GameObject *obj)
@@ -192,23 +216,33 @@ void Game::initializeMap()
 
 void Game::setPlayerCommand(int c)
 {
+    if (state_ != GameState::RUNNING){
+        return;
+    }
 
     player_->setCommand(c);
 }
 
 void Game::unsetPlayerCommand(int c)
 {
+    if (state_ != GameState::RUNNING){
+        return;
+    }
+
     player_->unsetCommand(c);
 }
 
 GameObject *Game::collide(GameObject *obj, float x, float y)
 {
+    if (state_ != GameState::RUNNING){
+        return nullptr;
+    }
 
     GameObject *dst = nullptr;
 
     for (GameObject *item : items_)
     {
-        if (obj == item || !item->collideable())
+        if (obj == item || !item->collideable() || !item->alive())
         {
             continue;
         }
@@ -294,9 +328,9 @@ void Game::loose()
 void Game::win()
 {
 
-    for (Enemy *enemy : enemies_)
-    {
-        enemy->kill();
-    }
+    // for (Enemy *enemy : enemies_)
+    // {
+    //     enemy->kill();
+    // }
     setState(GameState::WIN);
 }

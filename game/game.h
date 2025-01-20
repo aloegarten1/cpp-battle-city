@@ -48,6 +48,7 @@ private:
     Player *player_;
 
     QVector<GameObject *> items_;
+    QVector<GameObject *> destroyQueue_;
     QVector<Enemy *> enemies_;
 
     void destroyGameObject(GameObject *obj);
