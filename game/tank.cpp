@@ -35,11 +35,11 @@ QString Tank::skin()
 
 void Tank::fire()
 {
-    if (frame_ - reloadCountdown_ < 10) // ??????
+    if (frame_ - reloadCountdown_ < 5) // ??????
     {
         return;
     }
-
+    
     reloadCountdown_ = frame_;
 
     float x = x_;

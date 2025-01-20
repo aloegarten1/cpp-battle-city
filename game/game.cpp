@@ -67,6 +67,8 @@ void Game::setState(GameState state)
 
 void Game::update()
 {
+    player_->update(); // apply user input
+
     for (Enemy *enemy : enemies_)
     {
         if (state_ != GameState::RUNNING){

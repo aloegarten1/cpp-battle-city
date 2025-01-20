@@ -12,7 +12,7 @@ void Player::setCommand(int c)
         return;
     }
     commands_.append(c);
-    applyCommand();
+    //   applyCommand();
 }
 
 void Player::unsetCommand(int c)
@@ -26,10 +26,10 @@ void Player::unsetCommand(int c)
         return;
     }
     commands_.removeAt(idx);
-    applyCommand();
+    // applyCommand();
 }
 
-void Player::applyCommand()
+void Player::update()
 {
     if (!alive_)
         return;

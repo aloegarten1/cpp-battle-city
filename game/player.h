@@ -12,11 +12,11 @@ public:
     Player(Game *game) : TankDriver(game), commands_() {};
     void setCommand(int c);
     void unsetCommand(int c);
+    void update();
 
 private:
     QList<int> commands_;
     int getCommandIdx(int c);
-    void applyCommand();
 };
 
 #endif // PLAYER_H
