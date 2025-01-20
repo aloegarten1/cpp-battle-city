@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include "mainmenu.h"
-#include "gamescene.h"
 #include "settingsmenu.h"
 #include "settings.h"
 
@@ -15,7 +14,6 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
 
 private slots:
-    void onStartGame();
     void onOpenSettings();
     void onSettingsSaved();
     void onBackToMainMenu();
@@ -23,7 +21,6 @@ private slots:
 private:
     QStackedWidget* m_stackedWidget;
     MainMenu* m_mainMenu;
-    GameScene* m_gameScene;
     SettingsMenu* m_settingsMenu;
     Settings m_settings;
 };
