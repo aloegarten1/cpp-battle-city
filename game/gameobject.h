@@ -14,7 +14,7 @@ public:
 
     virtual void update();
 
-    void kill() { alive_ = true; }
+    void kill() { alive_ = false; }
 
     bool collideable() { return collide_; }
     bool destructable() { return destructable_; }
