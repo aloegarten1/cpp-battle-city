@@ -16,7 +16,7 @@ void Enemy::AI()
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 8);
+    std::uniform_int_distribution<> dis(0, 10);
 
     int coin = dis(gen);
 
@@ -35,6 +35,8 @@ void Enemy::AI()
         tank_->setDirecton(Direction::LEFT);
         break;
     case 5:
+    case 6:
+    case 7:
         tank_->fire();
         break;
     default:

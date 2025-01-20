@@ -8,7 +8,7 @@ SettingsMenu::SettingsMenu(Settings *settings, QWidget *parent)
     // Enemies Count SpinBox
     QLabel *enemiesCountLabel = new QLabel("Enemies Count:", this);
     QSpinBox *enemiesCountSpinBox = new QSpinBox(this);
-    enemiesCountSpinBox->setRange(1, 5);
+    enemiesCountSpinBox->setRange(1, 10);
     enemiesCountSpinBox->setValue(m_settings->getEnemiesCount());
     layout->addWidget(enemiesCountLabel);
     layout->addWidget(enemiesCountSpinBox);
