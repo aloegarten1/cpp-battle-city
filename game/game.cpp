@@ -100,6 +100,8 @@ void Game::update()
 
     }
 
+    destroyQueue_.clear();
+
 }
 
 void Game::destroyGameObject(GameObject *obj)
