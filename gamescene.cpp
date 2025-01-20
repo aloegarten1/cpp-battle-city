@@ -105,6 +105,8 @@ void GameScene::paintEvent(QPaintEvent *event)
     {
     case GameState::RUNNING:
     {
+        painter.setOpacity(0.75);
+
         for (GameObject *obj : controller_->getObjects())
         {
             QPointF position = QPointF(obj->x() * scale, obj->y() * scale);

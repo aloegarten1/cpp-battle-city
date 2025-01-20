@@ -74,7 +74,8 @@ void Game::update()
 
     for (GameObject *item : items_)
     {
-        if (!item->alive()) {
+        if (!item->alive())
+        {
             delete item;
             continue;
         }
@@ -85,7 +86,10 @@ void Game::update()
 void Game::destroyGameObject(GameObject *obj)
 {
     auto it = std::find(items_.begin(), items_.end(), obj);
-    if (items_.end() == it) { return; }
+    if (items_.end() == it)
+    {
+        return;
+    }
     items_.erase(it);
     obj->kill();
 }
@@ -97,20 +101,35 @@ void Game::addGameObject(GameObject *obj)
 
 void Game::initializeEnemies()
 {
+
+    EnemyHQ *hq = new EnemyHQ(this, 8, 2);
+    addGameObject(hq);
+
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis13(0, 13);
-    std::uniform_int_distribution<> dis9(0, 9);
+    std::uniform_int_distribution<> dis12(0, 12);
+    std::uniform_int_distribution<> dis8(0, 8);
 
     int enemiesCount = settings_->getEnemiesCount();
     for (int i = 0; i < enemiesCount; ++i)
     {
-
-        int x = 2 + dis13(gen);
-        int y = 2 + dis9(gen);
-
         Enemy *enemy = new Enemy(this);
+
+        int x = 0;
+        int y = 0;
+
+        while (true)
+        {
+            x = 2 + dis12(gen);
+            y = 2 + dis8(gen);
+
+            if (!collide(nullptr, x, y))
+            {
+                break;
+            }
+        }
         enemy->initTank("enemy", x, y);
+
         addGameObject(enemy->getTank());
         enemies_.append(enemy);
     }
@@ -129,10 +148,7 @@ void Game::initializeMap()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis100(0, 100);
 
-    EnemyHQ *hq = new EnemyHQ(this, 8, 2);
-    addGameObject(hq);
-
-    for (int ix = 0; ix < 16; ix++)
+    for (int ix = 1; ix < 15; ix++)
     {
 
         ConcreteWall *cwall = new ConcreteWall(this, ix, 0);
@@ -165,7 +181,7 @@ void Game::initializeMap()
         }
     }
 
-    for (int j = 1; j < 11; j++)
+    for (int j = 0; j < 12; j++)
     {
         ConcreteWall *cwall = new ConcreteWall(this, 0, j);
         addGameObject(cwall);
